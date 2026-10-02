@@ -1,0 +1,83 @@
+PC1> ping 203.0.113.3
+
+84 bytes from 203.0.113.3 icmp_seq=1 ttl=63 time=20.622 ms
+84 bytes from 203.0.113.3 icmp_seq=2 ttl=63 time=10.754 ms
+84 bytes from 203.0.113.3 icmp_seq=3 ttl=63 time=14.188 ms
+84 bytes from 203.0.113.3 icmp_seq=4 ttl=63 time=15.304 ms
+84 bytes from 203.0.113.3 icmp_seq=5 ttl=63 time=15.065 ms
+
+PC2> ping 203.0.113.3
+
+203.0.113.3 icmp_seq=1 timeout
+203.0.113.3 icmp_seq=2 timeout
+203.0.113.3 icmp_seq=3 timeout
+203.0.113.3 icmp_seq=4 timeout
+203.0.113.3 icmp_seq=5 timeout
+
+PC4> ping 203.0.113.10
+
+84 bytes from 203.0.113.10 icmp_seq=1 ttl=63 time=19.815 ms
+84 bytes from 203.0.113.10 icmp_seq=2 ttl=63 time=12.802 ms
+84 bytes from 203.0.113.10 icmp_seq=3 ttl=63 time=16.071 ms
+84 bytes from 203.0.113.10 icmp_seq=4 ttl=63 time=16.703 ms
+84 bytes from 203.0.113.10 icmp_seq=5 ttl=63 time=11.310 ms
+
+R1#show ip nat tran
+Pro Inside global      Inside local       Outside local      Outside global
+--- 203.0.113.10       192.168.10.2       ---                ---
+R1#show ip nat statis
+Total active translations: 1 (1 static, 0 dynamic; 0 extended)
+Outside interfaces:
+  FastEthernet1/0
+Inside interfaces:
+  FastEthernet0/0
+Hits: 20  Misses: 0
+CEF Translated packets: 20, CEF Punted packets: 0
+Expired translations: 10
+Dynamic mappings:
+nat-limit statistics:
+ max entry: max allowed 0, used 0, missed 0
+R1#debug ip nat
+IP NAT debugging is on
+R1#
+*Oct  2 09:52:51.319: NAT: Entry assigned id 12
+*Oct  2 09:52:51.319: NAT*: s=192.168.10.2->203.0.113.10, d=203.0.113.3 [32499]
+*Oct  2 09:52:51.331: NAT*: s=203.0.113.3, d=203.0.113.10->192.168.10.2 [32499]
+R1#
+*Oct  2 09:52:52.343: NAT: Entry assigned id 13
+*Oct  2 09:52:52.343: NAT*: s=192.168.10.2->203.0.113.10, d=203.0.113.3 [32500]
+*Oct  2 09:52:52.343: NAT*: s=203.0.113.3, d=203.0.113.10->192.168.10.2 [32500]
+R1#
+*Oct  2 09:52:53.351: NAT: Entry assigned id 14
+*Oct  2 09:52:53.351: NAT*: s=192.168.10.2->203.0.113.10, d=203.0.113.3 [32501]
+*Oct  2 09:52:53.355: NAT*: s=203.0.113.3, d=203.0.113.10->192.168.10.2 [32501]
+R1#
+*Oct  2 09:52:54.367: NAT: Entry assigned id 15
+*Oct  2 09:52:54.367: NAT*: s=192.168.10.2->203.0.113.10, d=203.0.113.3 [32502]
+*Oct  2 09:52:54.375: NAT*: s=203.0.113.3, d=203.0.113.10->192.168.10.2 [32502]
+R1#
+*Oct  2 09:52:55.383: NAT: Entry assigned id 16
+*Oct  2 09:52:55.383: NAT*: s=192.168.10.2->203.0.113.10, d=203.0.113.3 [32503]
+*Oct  2 09:52:55.387: NAT*: s=203.0.113.3, d=203.0.113.10->192.168.10.2 [32503]
+R1#
+*Oct  2 09:53:03.851: NAT: Entry assigned id 17
+*Oct  2 09:53:03.851: NAT*: s=203.0.113.3, d=203.0.113.10->192.168.10.2 [32512]
+*Oct  2 09:53:03.863: NAT*: s=192.168.10.2->203.0.113.10, d=203.0.113.3 [32512]
+R1#
+*Oct  2 09:53:04.875: NAT: Entry assigned id 18
+*Oct  2 09:53:04.875: NAT*: s=203.0.113.3, d=203.0.113.10->192.168.10.2 [32513]
+*Oct  2 09:53:04.875: NAT*: s=192.168.10.2->203.0.113.10, d=203.0.113.3 [32513]
+R1#
+*Oct  2 09:53:05.887: NAT: Entry assigned id 19
+*Oct  2 09:53:05.887: NAT*: s=203.0.113.3, d=203.0.113.10->192.168.10.2 [32514]
+*Oct  2 09:53:05.891: NAT*: s=192.168.10.2->203.0.113.10, d=203.0.113.3 [32514]
+R1#
+*Oct  2 09:53:06.903: NAT: Entry assigned id 20
+*Oct  2 09:53:06.903: NAT*: s=203.0.113.3, d=203.0.113.10->192.168.10.2 [32515]
+*Oct  2 09:53:06.911: NAT*: s=192.168.10.2->203.0.113.10, d=203.0.113.3 [32515]
+R1#
+*Oct  2 09:53:07.919: NAT: Entry assigned id 21
+*Oct  2 09:53:07.919: NAT*: s=203.0.113.3, d=203.0.113.10->192.168.10.2 [32516]
+*Oct  2 09:53:07.923: NAT*: s=192.168.10.2->203.0.113.10, d=203.0.113.3 [32516]
+R1#undebug all
+All possible debugging has been turned off

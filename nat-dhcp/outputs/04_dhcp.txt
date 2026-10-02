@@ -1,0 +1,170 @@
+PC1> ip dhcp -d
+Opcode: 1 (REQUEST)
+Client IP Address: 0.0.0.0
+Your IP Address: 0.0.0.0
+Server IP Address: 0.0.0.0
+Gateway IP Address: 0.0.0.0
+Client MAC Address: 00:50:79:66:68:00
+Option 53: Message Type = Discover
+Option 12: Host Name = PC1
+Option 61: Client Identifier = Hardware Type=Ethernet MAC Address = 00:50:79:66:68:00
+
+Opcode: 1 (REQUEST)
+Client IP Address: 0.0.0.0
+Your IP Address: 0.0.0.0
+Server IP Address: 0.0.0.0
+Gateway IP Address: 0.0.0.0
+Client MAC Address: 00:50:79:66:68:00
+Option 53: Message Type = Discover
+Option 12: Host Name = PC1
+Option 61: Client Identifier = Hardware Type=Ethernet MAC Address = 00:50:79:66:68:00
+
+Opcode: 2 (REPLY)
+Client IP Address: 0.0.0.0
+Your IP Address: 192.168.10.11
+Server IP Address: 0.0.0.0
+Gateway IP Address: 0.0.0.0
+Client MAC Address: 00:50:79:66:68:00
+Option 53: Message Type = Offer
+Option 54: DHCP Server = 192.168.10.1
+Option 51: Lease Time = 120
+Option 58: Renewal Time = 60
+Option 59: Rebinding Time = 105
+Option 1: Subnet Mask = 255.255.255.0
+Option 3: Router = 192.168.10.1
+
+Opcode: 1 (REQUEST)
+Client IP Address: 192.168.10.11
+Your IP Address: 0.0.0.0
+Server IP Address: 0.0.0.0
+Gateway IP Address: 0.0.0.0
+Client MAC Address: 00:50:79:66:68:00
+Option 53: Message Type = Request
+Option 54: DHCP Server = 192.168.10.1
+Option 50: Requested IP Address = 192.168.10.11
+Option 61: Client Identifier = Hardware Type=Ethernet MAC Address = 00:50:79:66:68:00
+Option 12: Host Name = PC1
+
+Opcode: 2 (REPLY)
+Client IP Address: 192.168.10.11
+Your IP Address: 192.168.10.11
+Server IP Address: 0.0.0.0
+Gateway IP Address: 0.0.0.0
+Client MAC Address: 00:50:79:66:68:00
+Option 53: Message Type = Ack
+Option 54: DHCP Server = 192.168.10.1
+Option 51: Lease Time = 120
+Option 58: Renewal Time = 60
+Option 59: Rebinding Time = 105
+Option 1: Subnet Mask = 255.255.255.0
+Option 3: Router = 192.168.10.1
+
+ IP 192.168.10.11/24 GW 192.168.10.1
+
+PC1> show ip
+
+NAME        : PC1[1]
+IP/MASK     : 192.168.10.11/24
+GATEWAY     : 192.168.10.1
+DNS         :
+DHCP SERVER : 192.168.10.1
+DHCP LEASE  : 94, 120/60/105
+MAC         : 00:50:79:66:68:00
+LPORT       : 20014
+RHOST:PORT  : 127.0.0.1:20015
+MTU         : 1500
+
+PC2> ip dhcp
+DDORA IP 192.168.10.12/24 GW 192.168.10.1
+
+PC3> ip dhcp
+DDORA IP 192.168.10.13/24 GW 192.168.10.1
+
+
+
+R1#show ip dhcp binding
+Bindings from all pools not associated with VRF:
+IP address      Client-ID/              Lease expiration        Type       State      Interface
+                Hardware address/
+                User name
+192.168.10.11   0100.5079.6668.00       Oct 02 2026 11:29 AM    Automatic  Active     FastEthernet0/0
+192.168.10.12   0100.5079.6668.01       Oct 02 2026 11:29 AM    Automatic  Active     FastEthernet0/0
+192.168.10.13   0100.5079.6668.02       Oct 02 2026 11:29 AM    Automatic  Active     FastEthernet0/0
+
+R1#show ip dhcp pool
+
+Pool LAN_POOL :
+ Utilization mark (high/low)    : 100 / 0
+ Subnet size (first/next)       : 0 / 0
+ Total addresses                : 254
+ Leased addresses               : 3
+ Excluded addresses             : 10
+ Pending event                  : none
+ 1 subnet is currently in the pool :
+ Current index        IP address range                    Leased/Excluded/Total
+ 192.168.10.14        192.168.10.1     - 192.168.10.254    3     / 10    / 254
+
+R1#show ip dhcp server statistics
+Memory usage         15950
+Address pools        1
+Database agents      0
+Automatic bindings   3
+Manual bindings      0
+Expired bindings     0
+Malformed messages   0
+Secure arp entries   0
+Renew messages       0
+Workspace timeouts   0
+Static routes        0
+Relay bindings       0
+Relay bindings active        0
+Relay bindings terminated    0
+Relay bindings selecting     0
+
+Message              Received
+BOOTREQUEST          0
+DHCPDISCOVER         6
+DHCPREQUEST          7
+DHCPDECLINE          0
+DHCPRELEASE          0
+DHCPINFORM           0
+DHCPVENDOR           0
+BOOTREPLY            0
+DHCPOFFER            0
+DHCPACK              0
+DHCPNAK              0
+
+Message              Sent
+BOOTREPLY            0
+DHCPOFFER            3
+DHCPACK              7
+DHCPNAK              0
+
+Message              Forwarded
+BOOTREQUEST          0
+DHCPDISCOVER         0
+DHCPREQUEST          0
+DHCPDECLINE          0
+DHCPRELEASE          0
+DHCPINFORM           0
+DHCPVENDOR           0
+BOOTREPLY            0
+DHCPOFFER            0
+DHCPACK              0
+DHCPNAK              0
+
+DHCP-DPM Statistics
+Offer notifications sent        0
+Offer callbacks received        0
+Classname requests sent         0
+Classname callbacks received    0
+
+PC3> ip dhcp -x
+
+R1#show ip dhcp binding
+Bindings from all pools not associated with VRF:
+IP address      Client-ID/              Lease expiration        Type       State      Interface
+                Hardware address/
+                User name
+192.168.10.11   0100.5079.6668.00       Oct 02 2026 11:34 AM    Automatic  Active     FastEthernet0/0
+192.168.10.12   0100.5079.6668.01       Oct 02 2026 11:34 AM    Automatic  Active     FastEthernet0/0

@@ -1,0 +1,66 @@
+PC1> ping 203.0.113.3
+
+84 bytes from 203.0.113.3 icmp_seq=1 ttl=63 time=19.813 ms
+84 bytes from 203.0.113.3 icmp_seq=2 ttl=63 time=21.441 ms
+84 bytes from 203.0.113.3 icmp_seq=3 ttl=63 time=12.145 ms
+84 bytes from 203.0.113.3 icmp_seq=4 ttl=63 time=11.987 ms
+84 bytes from 203.0.113.3 icmp_seq=5 ttl=63 time=15.448 ms
+
+PC2> ping 203.0.113.3
+
+84 bytes from 203.0.113.3 icmp_seq=1 ttl=63 time=20.390 ms
+84 bytes from 203.0.113.3 icmp_seq=2 ttl=63 time=18.807 ms
+84 bytes from 203.0.113.3 icmp_seq=3 ttl=63 time=12.723 ms
+84 bytes from 203.0.113.3 icmp_seq=4 ttl=63 time=20.929 ms
+84 bytes from 203.0.113.3 icmp_seq=5 ttl=63 time=20.719 ms
+
+
+PC3> ping 203.0.113.3
+
+*192.168.10.1 icmp_seq=1 ttl=255 time=9.498 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.10.1 icmp_seq=2 ttl=255 time=10.437 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.10.1 icmp_seq=3 ttl=255 time=9.896 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.10.1 icmp_seq=4 ttl=255 time=10.890 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.10.1 icmp_seq=5 ttl=255 time=10.043 ms (ICMP type:3, code:1, Destination host unreachable)
+
+PC3> ping 203.0.113.3
+
+84 bytes from 203.0.113.3 icmp_seq=1 ttl=63 time=19.854 ms
+84 bytes from 203.0.113.3 icmp_seq=2 ttl=63 time=21.078 ms
+84 bytes from 203.0.113.3 icmp_seq=3 ttl=63 time=18.713 ms
+84 bytes from 203.0.113.3 icmp_seq=4 ttl=63 time=14.839 ms
+84 bytes from 203.0.113.3 icmp_seq=5 ttl=63 time=11.600 ms
+
+
+R1#show ip nat tra
+Pro Inside global      Inside local       Outside local      Outside global
+icmp 203.0.113.20:400  192.168.10.2:400   203.0.113.3:400    203.0.113.3:400
+icmp 203.0.113.20:656  192.168.10.2:656   203.0.113.3:656    203.0.113.3:656
+icmp 203.0.113.20:912  192.168.10.2:912   203.0.113.3:912    203.0.113.3:912
+icmp 203.0.113.20:1168 192.168.10.2:1168  203.0.113.3:1168   203.0.113.3:1168
+icmp 203.0.113.20:1424 192.168.10.2:1424  203.0.113.3:1424   203.0.113.3:1424
+--- 203.0.113.20       192.168.10.2       ---                ---
+icmp 203.0.113.21:2192 192.168.10.3:2192  203.0.113.3:2192   203.0.113.3:2192
+icmp 203.0.113.21:2448 192.168.10.3:2448  203.0.113.3:2448   203.0.113.3:2448
+icmp 203.0.113.21:2704 192.168.10.3:2704  203.0.113.3:2704   203.0.113.3:2704
+icmp 203.0.113.21:2960 192.168.10.3:2960  203.0.113.3:2960   203.0.113.3:2960
+icmp 203.0.113.21:3216 192.168.10.3:3216  203.0.113.3:3216   203.0.113.3:3216
+--- 203.0.113.21       192.168.10.3       ---                ---
+
+R1#show ip nat stat
+Total active translations: 12 (0 static, 12 dynamic; 10 extended)
+Outside interfaces:
+  FastEthernet1/0
+Inside interfaces:
+  FastEthernet0/0
+Hits: 242  Misses: 0
+CEF Translated packets: 242, CEF Punted packets: 15
+Expired translations: 63
+Dynamic mappings:
+-- Inside Source
+[Id: 2] access-list 1 pool PUBLIC refcount 12
+ pool PUBLIC: netmask 255.255.255.0
+        start 203.0.113.20 end 203.0.113.21
+        type generic, total addresses 2, allocated 2 (100%), misses 20
+nat-limit statistics:
+ max entry: max allowed 0, used 0, missed 0
