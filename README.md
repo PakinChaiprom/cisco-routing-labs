@@ -5,7 +5,7 @@ Network labs I built and verified in GNS3. Each lab has the topology, the router
 | Lab | Topics | Status |
 |---|---|---|
 | [nat-dhcp](nat-dhcp/) | Static NAT, PAT, dynamic NAT, pool exhaustion, DHCP server | Done |
-| ospf | Single-area and multi-area OSPF, link failure, virtual link | Planned |
+| [ospf](ospf/) | Single-area OSPF, convergence time after link failure, Hello/Dead tuning, multi-area, virtual link | Done |
 | rip | RIP, ECMP, split horizon, count-to-infinity | Planned |
 | vlan-intervlan | VLANs, 802.1Q trunk, router-on-a-stick | Planned |
 

@@ -1,0 +1,112 @@
+PC1> trace 192.168.5.10
+trace to 192.168.5.10, 8 hops max, press Ctrl+C to stop
+ 1   192.168.1.1   10.249 ms  9.372 ms  9.431 ms
+ 2   10.0.12.2   19.575 ms  20.084 ms  20.172 ms
+ 3   10.0.23.2   30.137 ms  30.429 ms  29.969 ms
+ 4   10.1.34.2   50.480 ms  51.265 ms  41.991 ms
+ 5   10.2.45.2   51.366 ms  62.608 ms  60.253 ms
+ 6   *192.168.5.10   70.776 ms (ICMP type:3, code:3, Destination port unreachable)
+
+
+R1#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "ospf 1", distance 110, metric 5, type intra area
+  Last update from 10.0.12.2 on FastEthernet1/0, 00:50:44 ago
+  Routing Descriptor Blocks:
+  * 10.0.12.2, from 5.5.5.5, 00:50:44 ago, via FastEthernet1/0
+      Route metric is 5, traffic share count is 1
+PC1> ping 192.168.5.10 -t
+
+84 bytes from 192.168.5.10 icmp_seq=1 ttl=59 time=60.698 ms
+84 bytes from 192.168.5.10 icmp_seq=2 ttl=59 time=63.177 ms
+84 bytes from 192.168.5.10 icmp_seq=3 ttl=59 time=64.664 ms
+84 bytes from 192.168.5.10 icmp_seq=4 ttl=59 time=71.179 ms
+84 bytes from 192.168.5.10 icmp_seq=5 ttl=59 time=66.374 ms
+84 bytes from 192.168.5.10 icmp_seq=6 ttl=59 time=67.097 ms
+84 bytes from 192.168.5.10 icmp_seq=7 ttl=59 time=82.354 ms
+84 bytes from 192.168.5.10 icmp_seq=8 ttl=59 time=71.103 ms
+84 bytes from 192.168.5.10 icmp_seq=9 ttl=59 time=54.221 ms
+84 bytes from 192.168.5.10 icmp_seq=10 ttl=59 time=59.165 ms
+192.168.5.10 icmp_seq=11 timeout
+192.168.5.10 icmp_seq=12 timeout
+192.168.5.10 icmp_seq=13 timeout
+192.168.5.10 icmp_seq=14 timeout
+192.168.5.10 icmp_seq=15 timeout
+192.168.5.10 icmp_seq=16 timeout
+192.168.5.10 icmp_seq=17 timeout
+192.168.5.10 icmp_seq=18 timeout
+192.168.5.10 icmp_seq=19 timeout
+192.168.5.10 icmp_seq=20 timeout
+192.168.5.10 icmp_seq=21 timeout
+192.168.5.10 icmp_seq=22 timeout
+192.168.5.10 icmp_seq=23 timeout
+192.168.5.10 icmp_seq=24 timeout
+192.168.5.10 icmp_seq=25 timeout
+192.168.5.10 icmp_seq=26 timeout
+192.168.5.10 icmp_seq=27 timeout
+192.168.5.10 icmp_seq=28 timeout
+192.168.5.10 icmp_seq=29 timeout
+192.168.5.10 icmp_seq=30 timeout
+84 bytes from 192.168.5.10 icmp_seq=31 ttl=60 time=58.921 ms
+84 bytes from 192.168.5.10 icmp_seq=32 ttl=60 time=52.877 ms
+84 bytes from 192.168.5.10 icmp_seq=33 ttl=60 time=63.866 ms
+84 bytes from 192.168.5.10 icmp_seq=34 ttl=60 time=94.678 ms
+84 bytes from 192.168.5.10 icmp_seq=35 ttl=60 time=50.683 ms
+84 bytes from 192.168.5.10 icmp_seq=36 ttl=60 time=50.292 ms
+84 bytes from 192.168.5.10 icmp_seq=37 ttl=60 time=70.971 ms
+84 bytes from 192.168.5.10 icmp_seq=38 ttl=60 time=42.143 ms
+84 bytes from 192.168.5.10 icmp_seq=39 ttl=60 time=76.184 ms
+84 bytes from 192.168.5.10 icmp_seq=40 ttl=60 time=55.780 ms
+84 bytes from 192.168.5.10 icmp_seq=41 ttl=60 time=52.202 ms
+84 bytes from 192.168.5.10 icmp_seq=42 ttl=60 time=62.548 ms
+84 bytes from 192.168.5.10 icmp_seq=43 ttl=60 time=52.581 ms
+84 bytes from 192.168.5.10 icmp_seq=44 ttl=60 time=62.979 ms
+84 bytes from 192.168.5.10 icmp_seq=45 ttl=60 time=52.099 ms
+84 bytes from 192.168.5.10 icmp_seq=46 ttl=60 time=51.205 ms
+84 bytes from 192.168.5.10 icmp_seq=47 ttl=60 time=51.114 ms
+84 bytes from 192.168.5.10 icmp_seq=48 ttl=60 time=43.708 ms
+84 bytes from 192.168.5.10 icmp_seq=49 ttl=60 time=48.973 ms
+
+
+R1#
+*Oct  3 16:22:07.543: %OSPF-5-ADJCHG: Process 1, Nbr 2.2.2.2 on FastEthernet1/0 from FULL to DOWN, Neighbor Down: Dead timer expired
+R1#show ip ospf neighbor
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+3.3.3.3           0   FULL/  -        00:00:39    10.0.13.2       Serial2/0
+R1#show ip ospf neighbor
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+3.3.3.3           0   FULL/  -        00:00:34    10.0.13.2       Serial2/0
+R1#show ip ospf neighbor
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+3.3.3.3           0   FULL/  -        00:00:36    10.0.13.2       Serial2/0
+R1#
+*Oct  3 16:22:48.487: %OSPF-5-ADJCHG: Process 1, Nbr 2.2.2.2 on FastEthernet1/0 from LOADING to FULL, Loading Done
+
+
+R1#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "ospf 1", distance 110, metric 67, type intra area
+  Last update from 10.0.13.2 on Serial2/0, 00:00:34 ago
+  Routing Descriptor Blocks:
+  * 10.0.13.2, from 5.5.5.5, 00:00:34 ago, via Serial2/0
+      Route metric is 67, traffic share count is 1
+
+
+R1#show ip ospf neighbor
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+3.3.3.3           0   FULL/  -        00:00:33    10.0.13.2       Serial2/0
+
+
+PC1> trace 192.168.5.10
+trace to 192.168.5.10, 8 hops max, press Ctrl+C to stop
+ 1   192.168.1.1   2.355 ms  9.934 ms  8.984 ms
+ 2   10.0.13.2   19.478 ms  19.264 ms  19.651 ms
+ 3   10.1.34.2   30.096 ms  30.748 ms  30.343 ms
+ 4   10.2.45.2   40.622 ms  39.834 ms  50.756 ms
+ 5   *192.168.5.10   61.376 ms (ICMP type:3, code:3, Destination port unreachable)
+
+Downtime: 41.08 s, timeouts: 20

@@ -1,0 +1,228 @@
+R1#show ip route ospf
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 6 subnets, 2 masks
+O        10.0.23.0/30 [110/2] via 10.0.12.2, 00:25:25, FastEthernet1/0
+O IA     10.1.34.0/30 [110/3] via 10.0.12.2, 00:05:28, FastEthernet1/0
+
+
+R1#show ip ospf database
+
+            OSPF Router with ID (1.1.1.1) (Process ID 1)
+
+                Router Link States (Area 0)
+
+Link ID         ADV Router      Age         Seq#       Checksum Link count
+1.1.1.1         1.1.1.1         1582        0x80000014 0x00E9AC 4
+2.2.2.2         2.2.2.2         1583        0x80000010 0x00AAE3 2
+3.3.3.3         3.3.3.3         390         0x8000000D 0x0033C4 3
+4.4.4.4         4.4.4.4         1090        0x80000009 0x0032F6 2
+5.5.5.5         5.5.5.5         991         0x80000008 0x00FF0F 2
+
+                Net Link States (Area 0)
+
+Link ID         ADV Router      Age         Seq#       Checksum
+10.0.12.2       2.2.2.2         1583        0x80000001 0x00AC64
+10.0.23.2       3.3.3.3         1707        0x80000005 0x006194
+10.2.45.1       4.4.4.4         1090        0x80000006 0x00F8D0
+
+                Summary Net Link States (Area 0)
+
+Link ID         ADV Router      Age         Seq#       Checksum
+10.1.34.0       3.3.3.3         381         0x80000001 0x0021E4
+
+
+
+R1#show ip ospf database router 5.5.5.5
+
+            OSPF Router with ID (1.1.1.1) (Process ID 1)
+
+                Router Link States (Area 0)
+
+  Adv Router is not-reachable in topology Base with MTID 0
+  LS age: 1244
+  Options: (No TOS-capability, DC)
+  LS Type: Router Links
+  Link State ID: 5.5.5.5
+  Advertising Router: 5.5.5.5
+  LS Seq Number: 80000008
+  Checksum: 0xFF0F
+  Length: 48
+  Number of Links: 2
+
+    Link connected to: a Stub Network
+     (Link ID) Network/subnet number: 192.168.5.0
+     (Link Data) Network Mask: 255.255.255.0
+      Number of MTID metrics: 0
+       TOS 0 Metrics: 1
+
+    Link connected to: a Transit Network
+     (Link ID) Designated Router address: 10.2.45.1
+     (Link Data) Router Interface address: 10.2.45.2
+      Number of MTID metrics: 0
+       TOS 0 Metrics: 1
+
+
+R1#show ip ospf database database-summary
+
+            OSPF Router with ID (1.1.1.1) (Process ID 1)
+
+Area 0 database summary
+  LSA Type      Count    Delete   Maxage
+  Router        5        0        0
+  Network       3        0        0
+  Summary Net   1        0        0
+  Summary ASBR  0        0        0
+  Type-7 Ext    0        0        0
+    Prefixes redistributed in Type-7  0
+  Opaque Link   0        0        0
+  Opaque Area   0        0        0
+  Subtotal      9        0        0
+
+Process 1 database summary
+  LSA Type      Count    Delete   Maxage
+  Router        5        0        0
+  Network       3        0        0
+  Summary Net   1        0        0
+  Summary ASBR  0        0        0
+  Type-7 Ext    0        0        0
+  Opaque Link   0        0        0
+  Opaque Area   0        0        0
+  Type-5 Ext    0        0        0
+      Prefixes redistributed in Type-5  0
+  Opaque AS     0        0        0
+  Non-self      8
+  Total         9        0        0
+
+
+R1#show ip ospf border-routers
+
+            OSPF Router with ID (1.1.1.1) (Process ID 1)
+
+
+                Base Topology (MTID 0)
+
+Internal Router Routing Table
+Codes: i - Intra-area route, I - Inter-area route
+
+i 3.3.3.3 [2] via 10.0.12.2, FastEthernet1/0, ABR, Area 0, SPF 28
+
+
+R3#show ip ospf
+ Routing Process "ospf 1" with ID 3.3.3.3
+ Start time: 00:43:32.632, Time elapsed: 03:13:41.704
+ Supports only single TOS(TOS0) routes
+ Supports opaque LSA
+ Supports Link-local Signaling (LLS)
+ Supports area transit capability
+ Supports NSSA (compatible with RFC 3101)
+ Event-log enabled, Maximum number of events: 1000, Mode: cyclic
+ It is an area border router
+ Router is not originating router-LSAs with maximum metric
+ Initial SPF schedule delay 5000 msecs
+ Minimum hold time between two consecutive SPFs 10000 msecs
+ Maximum wait time between two consecutive SPFs 10000 msecs
+ Incremental-SPF disabled
+ Minimum LSA interval 5 secs
+ Minimum LSA arrival 1000 msecs
+ LSA group pacing timer 240 secs
+ Interface flood pacing timer 33 msecs
+ Retransmission pacing timer 66 msecs
+ Number of external LSA 0. Checksum Sum 0x000000
+ Number of opaque AS LSA 0. Checksum Sum 0x000000
+ Number of DCbitless external and opaque AS LSA 0
+ Number of DoNotAge external and opaque AS LSA 0
+ Number of areas in this router is 2. 2 normal 0 stub 0 nssa
+ Number of areas transit capable is 0
+ External flood list length 0
+ IETF NSF helper support enabled
+ Cisco NSF helper support enabled
+ Reference bandwidth unit is 100 mbps
+    Area BACKBONE(0)
+        Number of interfaces in this area is 2
+        Area has no authentication
+        SPF algorithm last executed 00:13:19.544 ago
+        SPF algorithm executed 24 times
+        Area ranges are
+        Number of LSA 9. Checksum Sum 0x051B08
+        Number of opaque link LSA 0. Checksum Sum 0x000000
+        Number of DCbitless LSA 0
+        Number of indication LSA 0
+        Number of DoNotAge LSA 0
+        Flood list length 0
+    Area 1
+        Number of interfaces in this area is 1
+        Area has no authentication
+        SPF algorithm last executed 00:12:02.908 ago
+        SPF algorithm executed 4 times
+        Area ranges are
+        Number of LSA 7. Checksum Sum 0x03AF74
+        Number of opaque link LSA 0. Checksum Sum 0x000000
+        Number of DCbitless LSA 0
+        Number of indication LSA 0
+        Number of DoNotAge LSA 0
+        Flood list length 0
+
+
+R4#show ip ospf neighbor
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+3.3.3.3           1   FULL/DR         00:00:34    10.1.34.1       FastEthernet0/0
+5.5.5.5           1   FULL/BDR        00:00:34    10.2.45.2       FastEthernet1/0
+
+
+R4#show ip route ospf
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 7 subnets, 2 masks
+O IA     10.0.12.0/30 [110/3] via 10.1.34.1, 00:13:35, FastEthernet0/0
+O IA     10.0.13.0/30 [110/65] via 10.1.34.1, 00:13:35, FastEthernet0/0
+O IA     10.0.23.0/30 [110/2] via 10.1.34.1, 00:13:35, FastEthernet0/0
+O IA  192.168.1.0/24 [110/4] via 10.1.34.1, 00:13:35, FastEthernet0/0
+O     192.168.5.0/24 [110/2] via 10.2.45.2, 00:11:49, FastEthernet1/0
+
+
+R5#show ip ospf neighbor
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+4.4.4.4           1   FULL/DR         00:00:35    10.2.45.1       FastEthernet0/0
+
+
+R5#show ip route ospf
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+
+PC1> ping 192.168.5.10
+
+*192.168.1.1 icmp_seq=1 ttl=255 time=9.613 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=2 ttl=255 time=4.448 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=3 ttl=255 time=1.741 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=4 ttl=255 time=8.815 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=5 ttl=255 time=1.621 ms (ICMP type:3, code:1, Destination host unreachable)
