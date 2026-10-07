@@ -1,0 +1,1307 @@
+Note: this test was run twice because the capture was not started the first time. The ping output, the trace after the failure and the Downtime line are from the second run, which matches the captures. The "debug ip routing" output of R1, R2 and R3 is from the first run.
+
+PC1> trace 192.168.5.10
+trace to 192.168.5.10, 8 hops max, press Ctrl+C to stop
+ 1   192.168.1.1   9.823 ms  10.962 ms  10.123 ms
+ 2   10.0.12.2   20.191 ms  19.458 ms  20.549 ms
+ 3   10.0.23.2   29.745 ms  30.223 ms  30.320 ms
+ 4   10.1.34.2   62.651 ms  63.428 ms  51.471 ms
+ 5   10.2.45.2   61.903 ms  61.649 ms  71.272 ms
+ 6   *192.168.5.10   72.322 ms (ICMP type:3, code:3, Destination port unreachable)
+
+
+PC1> ping 192.168.5.10 -t
+
+84 bytes from 192.168.5.10 icmp_seq=1 ttl=59 time=72.824 ms
+84 bytes from 192.168.5.10 icmp_seq=2 ttl=59 time=88.231 ms
+84 bytes from 192.168.5.10 icmp_seq=3 ttl=59 time=93.383 ms
+84 bytes from 192.168.5.10 icmp_seq=4 ttl=59 time=94.703 ms
+84 bytes from 192.168.5.10 icmp_seq=5 ttl=59 time=94.775 ms
+84 bytes from 192.168.5.10 icmp_seq=6 ttl=59 time=76.079 ms
+84 bytes from 192.168.5.10 icmp_seq=7 ttl=59 time=95.846 ms
+84 bytes from 192.168.5.10 icmp_seq=8 ttl=59 time=82.976 ms
+84 bytes from 192.168.5.10 icmp_seq=9 ttl=59 time=68.924 ms
+192.168.5.10 icmp_seq=10 timeout
+192.168.5.10 icmp_seq=11 timeout
+192.168.5.10 icmp_seq=12 timeout
+192.168.5.10 icmp_seq=13 timeout
+192.168.5.10 icmp_seq=14 timeout
+192.168.5.10 icmp_seq=15 timeout
+192.168.5.10 icmp_seq=16 timeout
+192.168.5.10 icmp_seq=17 timeout
+192.168.5.10 icmp_seq=18 timeout
+192.168.5.10 icmp_seq=19 timeout
+192.168.5.10 icmp_seq=20 timeout
+192.168.5.10 icmp_seq=21 timeout
+192.168.5.10 icmp_seq=22 timeout
+192.168.5.10 icmp_seq=23 timeout
+192.168.5.10 icmp_seq=24 timeout
+192.168.5.10 icmp_seq=25 timeout
+192.168.5.10 icmp_seq=26 timeout
+192.168.5.10 icmp_seq=27 timeout
+192.168.5.10 icmp_seq=28 timeout
+192.168.5.10 icmp_seq=29 timeout
+192.168.5.10 icmp_seq=30 timeout
+192.168.5.10 icmp_seq=31 timeout
+192.168.5.10 icmp_seq=32 timeout
+192.168.5.10 icmp_seq=33 timeout
+192.168.5.10 icmp_seq=34 timeout
+192.168.5.10 icmp_seq=35 timeout
+192.168.5.10 icmp_seq=36 timeout
+192.168.5.10 icmp_seq=37 timeout
+192.168.5.10 icmp_seq=38 timeout
+192.168.5.10 icmp_seq=39 timeout
+192.168.5.10 icmp_seq=40 timeout
+192.168.5.10 icmp_seq=41 timeout
+192.168.5.10 icmp_seq=42 timeout
+192.168.5.10 icmp_seq=43 timeout
+192.168.5.10 icmp_seq=44 timeout
+192.168.5.10 icmp_seq=45 timeout
+192.168.5.10 icmp_seq=46 timeout
+192.168.5.10 icmp_seq=47 timeout
+192.168.5.10 icmp_seq=48 timeout
+192.168.5.10 icmp_seq=49 timeout
+192.168.5.10 icmp_seq=50 timeout
+192.168.5.10 icmp_seq=51 timeout
+192.168.5.10 icmp_seq=52 timeout
+192.168.5.10 icmp_seq=53 timeout
+192.168.5.10 icmp_seq=54 timeout
+192.168.5.10 icmp_seq=55 timeout
+192.168.5.10 icmp_seq=56 timeout
+192.168.5.10 icmp_seq=57 timeout
+192.168.5.10 icmp_seq=58 timeout
+192.168.5.10 icmp_seq=59 timeout
+192.168.5.10 icmp_seq=60 timeout
+192.168.5.10 icmp_seq=61 timeout
+192.168.5.10 icmp_seq=62 timeout
+192.168.5.10 icmp_seq=63 timeout
+192.168.5.10 icmp_seq=64 timeout
+192.168.5.10 icmp_seq=65 timeout
+192.168.5.10 icmp_seq=66 timeout
+192.168.5.10 icmp_seq=67 timeout
+192.168.5.10 icmp_seq=68 timeout
+192.168.5.10 icmp_seq=69 timeout
+192.168.5.10 icmp_seq=70 timeout
+192.168.5.10 icmp_seq=71 timeout
+192.168.5.10 icmp_seq=72 timeout
+192.168.5.10 icmp_seq=73 timeout
+192.168.5.10 icmp_seq=74 timeout
+192.168.5.10 icmp_seq=75 timeout
+192.168.5.10 icmp_seq=76 timeout
+192.168.5.10 icmp_seq=77 timeout
+192.168.5.10 icmp_seq=78 timeout
+192.168.5.10 icmp_seq=79 timeout
+192.168.5.10 icmp_seq=80 timeout
+192.168.5.10 icmp_seq=81 timeout
+192.168.5.10 icmp_seq=82 timeout
+192.168.5.10 icmp_seq=83 timeout
+192.168.5.10 icmp_seq=84 timeout
+192.168.5.10 icmp_seq=85 timeout
+192.168.5.10 icmp_seq=86 timeout
+192.168.5.10 icmp_seq=87 timeout
+192.168.5.10 icmp_seq=88 timeout
+192.168.5.10 icmp_seq=89 timeout
+192.168.5.10 icmp_seq=90 timeout
+192.168.5.10 icmp_seq=91 timeout
+192.168.5.10 icmp_seq=92 timeout
+192.168.5.10 icmp_seq=93 timeout
+192.168.5.10 icmp_seq=94 timeout
+192.168.5.10 icmp_seq=95 timeout
+192.168.5.10 icmp_seq=96 timeout
+192.168.5.10 icmp_seq=97 timeout
+192.168.5.10 icmp_seq=98 timeout
+192.168.5.10 icmp_seq=99 timeout
+192.168.5.10 icmp_seq=100 timeout
+192.168.5.10 icmp_seq=101 timeout
+192.168.5.10 icmp_seq=102 timeout
+192.168.5.10 icmp_seq=103 timeout
+192.168.5.10 icmp_seq=104 timeout
+192.168.5.10 icmp_seq=105 timeout
+192.168.5.10 icmp_seq=106 timeout
+192.168.5.10 icmp_seq=107 timeout
+192.168.5.10 icmp_seq=108 timeout
+192.168.5.10 icmp_seq=109 timeout
+192.168.5.10 icmp_seq=110 timeout
+192.168.5.10 icmp_seq=111 timeout
+192.168.5.10 icmp_seq=112 timeout
+192.168.5.10 icmp_seq=113 timeout
+192.168.5.10 icmp_seq=114 timeout
+192.168.5.10 icmp_seq=115 timeout
+192.168.5.10 icmp_seq=116 timeout
+192.168.5.10 icmp_seq=117 timeout
+192.168.5.10 icmp_seq=118 timeout
+192.168.5.10 icmp_seq=119 timeout
+192.168.5.10 icmp_seq=120 timeout
+192.168.5.10 icmp_seq=121 timeout
+192.168.5.10 icmp_seq=122 timeout
+192.168.5.10 icmp_seq=123 timeout
+192.168.5.10 icmp_seq=124 timeout
+84 bytes from 192.168.5.10 icmp_seq=125 ttl=60 time=62.489 ms
+84 bytes from 192.168.5.10 icmp_seq=126 ttl=60 time=53.634 ms
+84 bytes from 192.168.5.10 icmp_seq=127 ttl=60 time=54.736 ms
+84 bytes from 192.168.5.10 icmp_seq=128 ttl=60 time=64.191 ms
+84 bytes from 192.168.5.10 icmp_seq=129 ttl=60 time=63.341 ms
+84 bytes from 192.168.5.10 icmp_seq=130 ttl=60 time=61.317 ms
+84 bytes from 192.168.5.10 icmp_seq=131 ttl=60 time=55.613 ms
+84 bytes from 192.168.5.10 icmp_seq=132 ttl=60 time=45.747 ms
+84 bytes from 192.168.5.10 icmp_seq=133 ttl=60 time=70.809 ms
+84 bytes from 192.168.5.10 icmp_seq=134 ttl=60 time=53.463 ms
+84 bytes from 192.168.5.10 icmp_seq=135 ttl=60 time=43.009 ms
+84 bytes from 192.168.5.10 icmp_seq=136 ttl=60 time=57.658 ms
+84 bytes from 192.168.5.10 icmp_seq=137 ttl=60 time=43.256 ms
+84 bytes from 192.168.5.10 icmp_seq=138 ttl=60 time=46.945 ms
+84 bytes from 192.168.5.10 icmp_seq=139 ttl=60 time=48.537 ms
+84 bytes from 192.168.5.10 icmp_seq=140 ttl=60 time=45.245 ms
+84 bytes from 192.168.5.10 icmp_seq=141 ttl=60 time=42.906 ms
+84 bytes from 192.168.5.10 icmp_seq=142 ttl=60 time=55.338 ms
+84 bytes from 192.168.5.10 icmp_seq=143 ttl=60 time=66.255 ms
+84 bytes from 192.168.5.10 icmp_seq=144 ttl=60 time=62.741 ms
+84 bytes from 192.168.5.10 icmp_seq=145 ttl=60 time=53.359 ms
+84 bytes from 192.168.5.10 icmp_seq=146 ttl=60 time=58.133 ms
+84 bytes from 192.168.5.10 icmp_seq=147 ttl=60 time=62.481 ms
+84 bytes from 192.168.5.10 icmp_seq=148 ttl=60 time=52.382 ms
+84 bytes from 192.168.5.10 icmp_seq=149 ttl=60 time=77.800 ms
+84 bytes from 192.168.5.10 icmp_seq=150 ttl=60 time=76.586 ms
+^C
+
+
+R1#debug ip routing
+IP routing debugging is on
+R1#
+*Oct  6 03:48:38.435: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:48:38.435: RT: rib update return code: 17
+*Oct  6 03:48:38.435: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:48:38.435: RT: rib update return code: 19
+*Oct  6 03:48:38.435: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:48:38.435: RT: rib update return code: 19
+*Oct  6 03:48:38.435: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:48:38.435: RT: rib update return code: 19
+*Oct  6 03:48:38.435: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+R1#
+*Oct  6 03:48:38.435: RT: rib update return code: 17
+*Oct  6 03:48:38.435: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:48:38.435: RT: rib update return code: 19
+R1#
+*Oct  6 03:48:43.319: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.0.12.2 Fa1/0  1048578
+
+*Oct  6 03:48:43.323: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.12.2 Fa1/0  1048578
+
+*Oct  6 03:48:43.327: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.12.2 Fa1/0  1048578
+
+*Oct  6 03:48:43.331: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.12.2 Fa1/0  1048578
+
+R1#
+*Oct  6 03:49:04.363: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:49:04.363: RT: rib update return code: 17
+*Oct  6 03:49:04.363: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:49:04.363: RT: rib update return code: 19
+*Oct  6 03:49:04.363: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:49:04.363: RT: rib update return code: 19
+*Oct  6 03:49:04.363: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:49:04.363: RT: rib update return code: 19
+*Oct  6 03:49:04.363: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+R1#
+*Oct  6 03:49:04.363: RT: rib update return code: 17
+*Oct  6 03:49:04.363: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:49:04.363: RT: rib update return code: 19
+R1#show ip route
+*Oct  6 03:49:31.567: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:49:31.571: RT: rib update return code: 17
+*Oct  6 03:49:31.575: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:49:31.579: RT: rib update return code: 19
+*Oct  6 03:49:31.579: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:49:31.579: RT: rib update return code: 19
+*Oct  6 03:49:31.579: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:49:31.579: RT: rib update return code: 19
+*Oct  6 03:49:31.579: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+R1#show ip route
+*Oct  6 03:49:31.579: RT: rib update return code: 17
+*Oct  6 03:49:31.579: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:49:31.579: RT: rib update return code: 19
+R1#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 4
+  Redistributing via rip
+  Last update from 10.0.12.2 on FastEthernet1/0, 00:00:55 ago
+  Routing Descriptor Blocks:
+  * 10.0.12.2, from 10.0.12.2, 00:00:55 ago, via FastEthernet1/0
+      Route metric is 4, traffic share count is 1
+R1#show ip route rip
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 7 subnets, 2 masks
+R        10.0.23.0/30 [120/1] via 10.0.12.2, 00:01:07, FastEthernet1/0
+R        10.1.34.0/30 [120/2] via 10.0.12.2, 00:01:07, FastEthernet1/0
+R        10.2.45.0/30 [120/3] via 10.0.12.2, 00:01:07, FastEthernet1/0
+R     192.168.5.0/24 [120/4] via 10.0.12.2, 00:01:07, FastEthernet1/0
+R1#
+*Oct  6 03:50:01.055: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:50:01.059: RT: rib update return code: 17
+*Oct  6 03:50:01.059: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:50:01.063: RT: rib update return code: 19
+*Oct  6 03:50:01.067: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:50:01.071: RT: rib update return code: 19
+*Oct  6 03:50:01.071: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:50:01.071: RT: rib update return code: 19
+*Oct  6 03:50:01.071: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+R1#
+*Oct  6 03:50:01.071: RT: rib update return code: 17
+*Oct  6 03:50:01.071: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:50:01.071: RT: rib update return code: 19
+R1#show ip route rip
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 7 subnets, 2 masks
+R        10.0.23.0/30 [120/1] via 10.0.12.2, 00:01:36, FastEthernet1/0
+R        10.1.34.0/30 [120/2] via 10.0.12.2, 00:01:36, FastEthernet1/0
+R        10.2.45.0/30 [120/3] via 10.0.12.2, 00:01:36, FastEthernet1/0
+R     192.168.5.0/24 [120/4] via 10.0.12.2, 00:01:36, FastEthernet1/0
+R1#
+*Oct  6 03:50:26.935: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:50:26.939: RT: rib update return code: 17
+*Oct  6 03:50:26.939: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:50:26.939: RT: rib update return code: 19
+*Oct  6 03:50:26.939: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:50:26.939: RT: rib update return code: 19
+*Oct  6 03:50:26.939: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:50:26.939: RT: rib update return code: 19
+*Oct  6 03:50:26.939: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+R1#
+*Oct  6 03:50:26.939: RT: rib update return code: 17
+*Oct  6 03:50:26.939: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:50:26.939: RT: rib update return code: 19
+R1#show ip route rip
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 7 subnets, 2 masks
+R        10.0.23.0/30 [120/1] via 10.0.12.2, 00:01:50, FastEthernet1/0
+R        10.1.34.0/30 [120/2] via 10.0.12.2, 00:01:50, FastEthernet1/0
+R        10.2.45.0/30 [120/3] via 10.0.12.2, 00:01:50, FastEthernet1/0
+R     192.168.5.0/24 [120/4] via 10.0.12.2, 00:01:50, FastEthernet1/0
+R1#show ip route rip
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 7 subnets, 2 masks
+R        10.0.23.0/30 [120/1] via 10.0.12.2, 00:02:03, FastEthernet1/0
+R        10.1.34.0/30 [120/2] via 10.0.12.2, 00:02:03, FastEthernet1/0
+R        10.2.45.0/30 [120/3] via 10.0.12.2, 00:02:03, FastEthernet1/0
+R     192.168.5.0/24 [120/4] via 10.0.12.2, 00:02:03, FastEthernet1/0
+R1#
+*Oct  6 03:50:55.435: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:50:55.435: RT: rib update return code: 17
+*Oct  6 03:50:55.439: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:50:55.439: RT: rib update return code: 19
+*Oct  6 03:50:55.439: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:50:55.439: RT: rib update return code: 19
+*Oct  6 03:50:55.439: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:50:55.439: RT: rib update return code: 19
+*Oct  6 03:50:55.439: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+R1#show ip route rip
+*Oct  6 03:50:55.439: RT: rib update return code: 17
+*Oct  6 03:50:55.439: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:50:55.439: RT: rib update return code: 19
+R1#show ip route rip
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 7 subnets, 2 masks
+R        10.0.23.0/30 [120/1] via 10.0.12.2, 00:02:15, FastEthernet1/0
+R        10.1.34.0/30 [120/2] via 10.0.12.2, 00:02:15, FastEthernet1/0
+R        10.2.45.0/30 [120/3] via 10.0.12.2, 00:02:15, FastEthernet1/0
+R     192.168.5.0/24 [120/4] via 10.0.12.2, 00:02:15, FastEthernet1/0
+R1#show ip route rip
+*Oct  6 03:51:21.379: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:51:21.379: RT: rib update return code: 17
+*Oct  6 03:51:21.379: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:51:21.379: RT: rib update return code: 19
+*Oct  6 03:51:21.383: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:51:21.383: RT: rib update return code: 19
+*Oct  6 03:51:21.383: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:51:21.383: RT: rib update return code: 19
+*Oct  6 03:51:21.383: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+R1#show ip route rip
+*Oct  6 03:51:21.383: RT: rib update return code: 17
+*Oct  6 03:51:21.383: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:51:21.383: RT: rib update return code: 19
+R1#show ip route rip
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 7 subnets, 2 masks
+R        10.0.23.0/30 [120/1] via 10.0.12.2, 00:02:41, FastEthernet1/0
+R        10.1.34.0/30 [120/2] via 10.0.12.2, 00:02:41, FastEthernet1/0
+R        10.2.45.0/30 [120/3] via 10.0.12.2, 00:02:41, FastEthernet1/0
+R     192.168.5.0/24 [120/4] via 10.0.12.2, 00:02:41, FastEthernet1/0
+R1#
+*Oct  6 03:51:29.167: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:51:29.171: RT: rib update return code: 17
+R1#show ip route rip
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 7 subnets, 2 masks
+R        10.0.23.0/30 [120/1] via 10.0.12.2, 00:02:54, FastEthernet1/0
+R        10.1.34.0/30 [120/2] via 10.0.12.2, 00:02:54, FastEthernet1/0
+R        10.2.45.0/30 [120/3] via 10.0.12.2, 00:02:54, FastEthernet1/0
+R     192.168.5.0/24 [120/4] via 10.0.12.2, 00:02:54, FastEthernet1/0
+R1#show ip route rip
+*Oct  6 03:51:47.523: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:51:47.527: RT: rib update return code: 17
+*Oct  6 03:51:47.527: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:51:47.531: RT: rib update return code: 19
+*Oct  6 03:51:47.535: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:51:47.539: RT: rib update return code: 19
+*Oct  6 03:51:47.543: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:51:47.543: RT: rib update return code: 19
+*Oct  6 03:51:47.543: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+R1#show ip route rip
+*Oct  6 03:51:47.543: RT: rib update return code: 17
+*Oct  6 03:51:47.543: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:51:47.543: RT: rib update return code: 19
+R1#show ip route rip
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 7 subnets, 2 masks
+R        10.0.23.0/30 [120/1] via 10.0.12.2, 00:03:06, FastEthernet1/0
+R        10.1.34.0/30 [120/2] via 10.0.12.2, 00:03:06, FastEthernet1/0
+R        10.2.45.0/30 [120/3] via 10.0.12.2, 00:03:06, FastEthernet1/0
+R     192.168.5.0/24 [120/4] via 10.0.12.2, 00:03:06, FastEthernet1/0
+R1#
+*Oct  6 03:51:52.583: RT: delete route to 10.0.23.0 via 10.0.12.2, rip metric [120/1]
+*Oct  6 03:51:52.583: RT: no routes to 10.0.23.0, entering holddown
+*Oct  6 03:51:52.587: RT: delete route to 10.1.34.0 via 10.0.12.2, rip metric [120/2]
+*Oct  6 03:51:52.587: RT: no routes to 10.1.34.0, entering holddown
+*Oct  6 03:51:52.587: RT: delete route to 10.2.45.0 via 10.0.12.2, rip metric [120/3]
+*Oct  6 03:51:52.587: RT: no routes to 10.2.45.0, entering holddown
+*Oct  6 03:51:52.587: RT: delete route to 192.168.5.0 via 10.0.12.2, rip metric [120/4]
+*Oct  6 03:51:52.587: RT: no routes to 192.168.5.0, entering holddown
+R1#show ip route rip
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 7 subnets, 2 masks
+R        10.0.23.0/30 is possibly down,
+          routing via 10.0.12.2, FastEth
+R        10.1.34.0/30 is possibly down,
+          routing via 10.0.12.2, FastEth
+R        10.2.45.0/30 is possibly down,
+          routing via 10.0.12.2, FastEth
+R     192.168.5.0/24 is possibly down, routing via 10.0.12.2, FastEthernet1/0
+R1#
+*Oct  6 03:52:16.659: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:52:16.659: RT: rib update return code: 17
+*Oct  6 03:52:16.659: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:52:16.659: RT: rib update return code: 18
+*Oct  6 03:52:16.659: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:52:16.659: RT: rib update return code: 18
+*Oct  6 03:52:16.659: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:52:16.659: RT: rib update return code: 18
+*Oct  6 03:52:16.659: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+R1#
+*Oct  6 03:52:16.659: RT: rib update return code: 18
+R1#show ip route rip
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 7 subnets, 2 masks
+R        10.0.23.0/30 is possibly down,
+          routing via 10.0.12.2, FastEth
+R        10.1.34.0/30 is possibly down,
+          routing via 10.0.12.2, FastEth
+R        10.2.45.0/30 is possibly down,
+          routing via 10.0.12.2, FastEth
+R     192.168.5.0/24 is possibly down, routing via 10.0.12.2, FastEthernet1/0
+R1#undebug all
+*Oct  6 03:52:44.035: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:52:44.039: RT: rib update return code: 17
+*Oct  6 03:52:44.039: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:52:44.039: RT: rib update return code: 18
+*Oct  6 03:52:44.039: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:52:44.039: RT: rib update return code: 18
+*Oct  6 03:52:44.039: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:52:44.039: RT: rib update return code: 18
+*Oct  6 03:52:44.039: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+R1#undebug all
+*Oct  6 03:52:44.039: RT: rib update return code: 18
+R1#undebug all
+*Oct  6 03:52:52.611: RT: delete subnet route to 10.0.23.0/30
+*Oct  6 03:52:52.615: RT: delete subnet route to 10.1.34.0/30
+*Oct  6 03:52:52.619: RT: delete subnet route to 10.2.45.0/30
+*Oct  6 03:52:52.619: RT: delete network route to 192.168.5.0/24
+R1#show ip route rip
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+R1#
+*Oct  6 03:53:09.867: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:53:09.871: RT: rib update return code: 17
+*Oct  6 03:53:09.875: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:53:09.875: RT: add 10.0.23.0/30 via 10.0.13.2, rip metric [120/3]
+*Oct  6 03:53:09.879: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:53:09.879: RT: add 10.1.34.0/30 via 10.0.13.2, rip metric [120/3]
+*Oct  6 03:53:09.879: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:53:09.879: RT: add 10.2.45.0/30 via 10.0.13.2, rip metric [120/4]
+*Oct  6 03:53:09.879: RT:
+R1#updating rip 192.168.5.0/24 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:53:09.879: RT: add 192.168.5.0/24 via 10.0.13.2, rip metric [120/5]
+R1#undebug all
+*Oct  6 03:53:36.991: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:53:36.995: RT: rib update return code: 17
+*Oct  6 03:53:36.999: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:53:37.003: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:53:37.007: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+*Oct  6 03:53:37.011: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.13.2 Se2/0  1048578
+
+R1#undebug all
+All possible debugging has been turned off
+
+
+
+R2#debug ip routing
+IP routing debugging is on
+R2#
+*Oct  6 03:44:03.211: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:44:03.215: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:44:03.215: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:44:03.215: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+R2#
+*Oct  6 03:44:31.151: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:44:31.155: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:44:31.159: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:44:31.163: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+R2#
+*Oct  6 03:44:57.635: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:44:57.639: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:44:57.643: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:44:57.647: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+R2#
+*Oct  6 03:45:26.063: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:45:26.067: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:45:26.071: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:45:26.075: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+R2#
+*Oct  6 03:45:55.307: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:45:55.311: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:45:55.311: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:45:55.311: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+R2#
+*Oct  6 03:46:24.275: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:46:24.279: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:46:24.283: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:46:24.287: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+R2#
+*Oct  6 03:46:46.335: RT: del 10.0.13.0 via 10.0.12.1, rip metric [120/1]
+*Oct  6 03:46:46.335: RT: delete route to 192.168.1.0 via 10.0.12.1, rip metric [120/1]
+*Oct  6 03:46:46.339: RT: no routes to 192.168.1.0, entering holddown
+R2#
+*Oct  6 03:46:50.383: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:46:50.387: RT: rib update return code: 18
+R2#
+*Oct  6 03:46:53.639: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:46:53.643: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:46:53.647: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:46:53.651: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:46:53.655: RT: rib update return code: 18
+*Oct  6 03:46:53.655: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+R2#
+*Oct  6 03:47:13.499: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:47:13.499: RT: rib update return code: 18
+R2#
+*Oct  6 03:47:20.187: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:47:20.187: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:47:20.187: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:47:20.191: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:47:20.191: RT: rib update return code: 18
+*Oct  6 03:47:20.191: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+R2#
+*Oct  6 03:47:46.387: RT: delete network route to 192.168.1.0/24
+R2#
+*Oct  6 03:47:49.019: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:47:49.023: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:47:49.027: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:47:49.031: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:47:49.031: RT: add 192.168.1.0/24 via 10.0.23.2, rip metric [120/4]
+*Oct  6 03:47:49.031: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+R2#
+*Oct  6 03:48:17.275: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:48:17.279: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:48:17.283: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:48:17.287: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:48:17.291: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+R2#
+*Oct  6 03:48:46.695: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:48:46.699: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:48:46.703: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:48:46.707: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+*Oct  6 03:48:46.711: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.23.2 Fa1/0  1048578
+
+R2#undebug all
+All possible debugging has been turned off
+
+
+
+R3#debug ip routing
+IP routing debugging is on
+R3#
+*Oct  6 03:44:10.751: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:44:10.751: RT: rib update return code: 19
+*Oct  6 03:44:10.751: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:44:10.751: RT: rib update return code: 17
+*Oct  6 03:44:10.751: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:44:10.751: RT: rib update return code: 17
+*Oct  6 03:44:10.751: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:44:10.751: RT: rib update return code: 19
+*Oct  6 03:44:10.751: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+R3#
+*Oct  6 03:44:10.751: RT: rib update return code: 19
+*Oct  6 03:44:10.751: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:44:10.751: RT: rib update return code: 19
+R3#
+*Oct  6 03:44:13.075: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.1.34.2 Fa1/0  1048578
+
+*Oct  6 03:44:13.079: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.1.34.2 Fa1/0  1048578
+
+R3#
+*Oct  6 03:44:16.231: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.23.1 Fa0/0  1048578
+
+*Oct  6 03:44:16.231: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.23.1 Fa0/0  1048578
+
+R3#
+*Oct  6 03:44:36.651: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:44:36.651: RT: rib update return code: 19
+*Oct  6 03:44:36.651: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:44:36.651: RT: rib update return code: 17
+*Oct  6 03:44:36.655: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:44:36.655: RT: rib update return code: 17
+*Oct  6 03:44:36.655: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:44:36.655: RT: rib update return code: 19
+*Oct  6 03:44:36.655: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+R3#
+*Oct  6 03:44:36.655: RT: rib update return code: 19
+*Oct  6 03:44:36.655: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:44:36.655: RT: rib update return code: 19
+R3#
+*Oct  6 03:44:42.211: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.23.1 Fa0/0  1048578
+
+*Oct  6 03:44:42.215: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.23.1 Fa0/0  1048578
+
+R3#
+*Oct  6 03:45:02.803: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.1.34.2 Fa1/0  1048578
+
+*Oct  6 03:45:02.807: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.1.34.2 Fa1/0  1048578
+
+*Oct  6 03:45:03.099: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:45:03.103: RT: rib update return code: 19
+*Oct  6 03:45:03.103: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:45:03.107: RT: rib update return code: 17
+*Oct  6 03:45:03.111: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:45:03.115: RT: rib update return code: 17
+*Oct  6 03:45:03.119: RT:
+R3#updating rip 10.2.45.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:45:03.123: RT: rib update return code: 19
+*Oct  6 03:45:03.123: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:45:03.123: RT: rib update return code: 19
+*Oct  6 03:45:03.123: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:45:03.123: RT: rib update return code: 19
+R3#
+*Oct  6 03:45:11.903: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.23.1 Fa0/0  1048578
+
+*Oct  6 03:45:11.903: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.23.1 Fa0/0  1048578
+
+R3#
+*Oct  6 03:45:31.695: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:45:31.699: RT: rib update return code: 19
+*Oct  6 03:45:31.699: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:45:31.699: RT: rib update return code: 17
+*Oct  6 03:45:31.699: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:45:31.699: RT: rib update return code: 17
+*Oct  6 03:45:31.699: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:45:31.699: RT: rib update return code: 19
+*Oct  6 03:45:31.699: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+R3#
+*Oct  6 03:45:31.699: RT: rib update return code: 19
+*Oct  6 03:45:31.699: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:45:31.699: RT: rib update return code: 19
+R3#
+*Oct  6 03:45:37.743: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.23.1 Fa0/0  1048578
+
+*Oct  6 03:45:37.747: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.23.1 Fa0/0  1048578
+
+R3#
+*Oct  6 03:45:56.551: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.1.34.2 Fa1/0  1048578
+
+*Oct  6 03:45:56.555: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.1.34.2 Fa1/0  1048578
+
+R3#
+*Oct  6 03:46:00.803: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:46:00.803: RT: rib update return code: 19
+*Oct  6 03:46:00.807: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:46:00.807: RT: rib update return code: 17
+*Oct  6 03:46:00.807: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:46:00.807: RT: rib update return code: 17
+*Oct  6 03:46:00.807: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:46:00.807: RT: rib update return code: 19
+*Oct  6 03:46:00.807: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+R3#
+*Oct  6 03:46:00.807: RT: rib update return code: 19
+*Oct  6 03:46:00.807: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:46:00.807: RT: rib update return code: 19
+R3#
+*Oct  6 03:46:03.927: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.23.1 Fa0/0  1048578
+
+*Oct  6 03:46:03.931: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.23.1 Fa0/0  1048578
+
+R3#
+*Oct  6 03:46:26.915: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:46:26.919: RT: rib update return code: 19
+*Oct  6 03:46:26.919: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:46:26.923: RT: rib update return code: 17
+*Oct  6 03:46:26.927: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:46:26.927: RT: rib update return code: 17
+*Oct  6 03:46:26.927: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:46:26.927: RT: rib update return code: 19
+*Oct  6 03:46:26.927: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+R3#
+*Oct  6 03:46:26.927: RT: rib update return code: 19
+*Oct  6 03:46:26.927: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:46:26.927: RT: rib update return code: 19
+R3#
+*Oct  6 03:46:31.471: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.23.1 Fa0/0  1048578
+
+*Oct  6 03:46:31.475: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.23.1 Fa0/0  1048578
+
+R3#
+*Oct  6 03:46:45.275: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.1.34.2 Fa1/0  1048578
+
+*Oct  6 03:46:45.279: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.1.34.2 Fa1/0  1048578
+
+R3#
+*Oct  6 03:46:53.107: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:46:53.111: RT: rib update return code: 19
+*Oct  6 03:46:53.111: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:46:53.115: RT: rib update return code: 17
+*Oct  6 03:46:53.115: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:46:53.115: RT: rib update return code: 17
+*Oct  6 03:46:53.115: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:46:53.115: RT: rib update return code: 19
+*Oct  6 03:46:53.115: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+R3#
+*Oct  6 03:46:53.115: RT: rib update return code: 19
+*Oct  6 03:46:53.115: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:46:53.115: RT: rib update return code: 19
+R3#
+*Oct  6 03:46:57.903: RT: del 192.168.1.0 via 10.0.23.1, rip metric [120/2]
+*Oct  6 03:46:57.903: RT: delete network route to 192.168.1.0/24
+*Oct  6 03:46:57.903: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.23.1 Fa0/0  1048578
+
+*Oct  6 03:46:57.903: RT: rib update return code: 5
+R3#
+*Oct  6 03:46:59.015: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.23.1 Fa0/0  1048578
+
+*Oct  6 03:46:59.019: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.23.1 Fa0/0  1048578
+
+*Oct  6 03:46:59.019: RT: rib update return code: 5
+R3#
+*Oct  6 03:47:03.591: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.1.34.2 Fa1/0  1048578
+
+*Oct  6 03:47:03.595: RT: rib update return code: 5
+R3#
+*Oct  6 03:47:21.015: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:47:21.019: RT: rib update return code: 19
+*Oct  6 03:47:21.019: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:47:21.023: RT: rib update return code: 17
+*Oct  6 03:47:21.023: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:47:21.023: RT: rib update return code: 17
+*Oct  6 03:47:21.023: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:47:21.023: RT: rib update return code: 19
+*Oct  6 03:47:21.023: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+R3#
+*Oct  6 03:47:21.023: RT: add 192.168.1.0/24 via 10.0.13.1, rip metric [120/3]
+*Oct  6 03:47:21.023: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:47:21.023: RT: rib update return code: 19
+R3#
+*Oct  6 03:47:25.367: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:47:25.367: RT: rib update return code: 17
+*Oct  6 03:47:25.367: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:47:25.367: RT: rib update return code: 17
+*Oct  6 03:47:25.367: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:47:25.367: RT: rib update return code: 19
+*Oct  6 03:47:25.367: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:47:25.367: RT: rib update return code: 19
+R3#
+*Oct  6 03:47:26.463: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.23.1 Fa0/0  1048578
+
+*Oct  6 03:47:26.467: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.23.1 Fa0/0  1048578
+
+*Oct  6 03:47:26.471: RT: rib update return code: 19
+R3#
+*Oct  6 03:47:37.335: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.1.34.2 Fa1/0  1048578
+
+*Oct  6 03:47:37.339: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.1.34.2 Fa1/0  1048578
+
+R3#
+*Oct  6 03:47:50.347: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:47:50.347: RT: rib update return code: 19
+*Oct  6 03:47:50.347: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:47:50.347: RT: rib update return code: 17
+*Oct  6 03:47:50.347: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:47:50.347: RT: rib update return code: 17
+*Oct  6 03:47:50.347: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:47:50.347: RT: rib update return code: 19
+*Oct  6 03:47:50.347: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+R3#
+*Oct  6 03:47:50.347: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:47:50.347: RT: rib update return code: 19
+R3#
+*Oct  6 03:47:55.927: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.23.1 Fa0/0  1048578
+
+*Oct  6 03:47:55.931: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.23.1 Fa0/0  1048578
+
+*Oct  6 03:47:55.935: RT: rib update return code: 19
+R3#
+*Oct  6 03:48:20.215: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:48:20.219: RT: rib update return code: 19
+*Oct  6 03:48:20.223: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:48:20.223: RT: rib update return code: 17
+*Oct  6 03:48:20.223: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:48:20.223: RT: rib update return code: 17
+*Oct  6 03:48:20.223: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:48:20.223: RT: rib update return code: 19
+*Oct  6 03:48:20.223: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+R3#
+*Oct  6 03:48:20.223: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:48:20.223: RT: rib update return code: 19
+R3#
+*Oct  6 03:48:22.887: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.23.1 Fa0/0  1048578
+
+R3#
+*Oct  6 03:48:31.099: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.1.34.2 Fa1/0  1048578
+
+*Oct  6 03:48:31.099: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.1.34.2 Fa1/0  1048578
+
+R3#
+*Oct  6 03:48:48.067: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+*Oct  6 03:48:48.071: RT: rib update return code: 19
+*Oct  6 03:48:48.075: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.0.13.1 Se2/0  1048578
+
+R3#
+*Oct  6 03:48:50.443: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.0.23.1 Fa0/0  1048578
+
+R3#undebug all
+All possible debugging has been turned off
+
+
+PC1> trace 192.168.5.10
+trace to 192.168.5.10, 8 hops max, press Ctrl+C to stop
+ 1   192.168.1.1   10.124 ms  9.173 ms  10.082 ms
+ 2   10.0.13.2   20.628 ms  19.795 ms  19.714 ms
+ 3   10.1.34.2   31.180 ms  29.352 ms  32.027 ms
+ 4   10.2.45.2   41.162 ms  40.510 ms  40.814 ms
+ 5   *192.168.5.10   61.494 ms (ICMP type:3, code:3, Destination port unreachable)
+
+
+Downtime: 232.30 s, pings lost: 115 (all timeouts)
+
+Note: about 13 s after the link was resumed the route was back on the path through R2.
+
+Note: in the serial capture, R3 (10.0.13.2) advertises 192.168.1.0 with metric 16, and R1 (10.0.13.1) advertises 10.0.23.0, 10.1.34.0, 10.2.45.0 and 192.168.5.0 with metric 16.

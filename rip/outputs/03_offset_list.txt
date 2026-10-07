@@ -1,0 +1,93 @@
+R1#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 3
+  Redistributing via rip
+  Last update from 10.0.13.2 on Serial2/0, 00:00:13 ago
+  Routing Descriptor Blocks:
+  * 10.0.13.2, from 10.0.13.2, 00:00:13 ago, via Serial2/0
+      Route metric is 3, traffic share count is 1
+
+
+R1#show int s2/0 | include BW
+  MTU 1500 bytes, BW 1544 Kbit/sec, DLY 20000 usec,
+
+
+R1#show int f1/0 | include BW
+  MTU 1500 bytes, BW 100000 Kbit/sec, DLY 100 usec,
+
+R3#show ip route 192.168.1.0
+Routing entry for 192.168.1.0/24
+  Known via "rip", distance 120, metric 1
+  Redistributing via rip
+  Last update from 10.0.13.1 on Serial2/0, 00:00:13 ago
+  Routing Descriptor Blocks:
+  * 10.0.13.1, from 10.0.13.1, 00:00:13 ago, via Serial2/0
+      Route metric is 1, traffic share count is 1
+
+PC1> trace 192.168.5.10
+trace to 192.168.5.10, 8 hops max, press Ctrl+C to stop
+ 1   192.168.1.1   9.791 ms  8.969 ms  8.732 ms
+ 2   10.0.13.2   29.572 ms  30.155 ms  30.136 ms
+ 3   10.1.34.2   50.600 ms  49.835 ms  49.784 ms
+ 4   10.2.45.2   50.298 ms  50.217 ms  51.435 ms
+ 5   *192.168.5.10   62.071 ms (ICMP type:3, code:3, Destination port unreachable)
+
+
+R1#show ip route rip
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 7 subnets, 2 masks
+R        10.0.23.0/30 [120/1] via 10.0.12.2, 00:00:05, FastEthernet1/0
+R        10.1.34.0/30 [120/2] via 10.0.12.2, 00:00:05, FastEthernet1/0
+R        10.2.45.0/30 [120/3] via 10.0.12.2, 00:00:05, FastEthernet1/0
+R     192.168.5.0/24 [120/4] via 10.0.12.2, 00:00:05, FastEthernet1/0
+
+
+R1#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 4
+  Redistributing via rip
+  Last update from 10.0.12.2 on FastEthernet1/0, 00:00:25 ago
+  Routing Descriptor Blocks:
+  * 10.0.12.2, from 10.0.12.2, 00:00:25 ago, via FastEthernet1/0
+      Route metric is 4, traffic share count is 1
+
+
+
+R1#show ip route 10.0.23.0
+Routing entry for 10.0.23.0/30
+  Known via "rip", distance 120, metric 1
+  Redistributing via rip
+  Last update from 10.0.12.2 on FastEthernet1/0, 00:00:19 ago
+  Routing Descriptor Blocks:
+  * 10.0.12.2, from 10.0.12.2, 00:00:19 ago, via FastEthernet1/0
+      Route metric is 1, traffic share count is 1
+
+
+R3#show ip route 192.168.1.0
+Routing entry for 192.168.1.0/24
+  Known via "rip", distance 120, metric 2
+  Redistributing via rip
+  Last update from 10.0.23.1 on FastEthernet0/0, 00:00:09 ago
+  Routing Descriptor Blocks:
+  * 10.0.23.1, from 10.0.23.1, 00:00:09 ago, via FastEthernet0/0
+      Route metric is 2, traffic share count is 1
+
+
+PC1> trace 192.168.5.10
+trace to 192.168.5.10, 8 hops max, press Ctrl+C to stop
+ 1   192.168.1.1   9.362 ms  8.581 ms  8.996 ms
+ 2   10.0.12.2   30.049 ms  29.780 ms  30.309 ms
+ 3   10.0.23.2   39.950 ms  41.403 ms  40.709 ms
+ 4   10.1.34.2   59.876 ms  60.312 ms  40.821 ms
+ 5   10.2.45.2   71.571 ms  70.470 ms  81.447 ms
+ 6   *192.168.5.10   71.692 ms (ICMP type:3, code:3, Destination port unreachable)

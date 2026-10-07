@@ -1,0 +1,635 @@
+R4#show ip interface fastEthernet1/0 | include Split
+  Split horizon is disabled
+R4#debug ip rip
+RIP protocol debugging is on
+R4#undeb
+*Oct  6 08:18:47.947: RIP: sending v2 update to 224.0.0.9 via FastEthernet0/0 (10.1.34.2)
+*Oct  6 08:18:47.947: RIP: build update entries
+*Oct  6 08:18:47.947:   10.2.45.0/30 via 0.0.0.0, metric 1, tag 0
+*Oct  6 08:18:47.947:   192.168.5.0/24 via 0.0.0.0, metric 2, tag 0
+R4#undebug all
+*Oct  6 08:18:54.639: RIP: received v2 update from 10.1.34.1 on FastEthernet0/0
+*Oct  6 08:18:54.639:      10.0.12.0/30 via 0.0.0.0 in 2 hops
+*Oct  6 08:18:54.639:      10.0.13.0/30 via 0.0.0.0 in 1 hops
+*Oct  6 08:18:54.643:      10.0.23.0/30 via 0.0.0.0 in 1 hops
+*Oct  6 08:18:54.647:      192.168.1.0/24 via 0.0.0.0 in 3 hops
+R4#undebug all
+*Oct  6 08:19:00.291: RIP: sending v2 update to 224.0.0.9 via FastEthernet1/0 (10.2.45.1)
+*Oct  6 08:19:00.291: RIP: build update entries
+*Oct  6 08:19:00.295:   10.0.12.0/30 via 0.0.0.0, metric 3, tag 0
+*Oct  6 08:19:00.295:   10.0.13.0/30 via 0.0.0.0, metric 2, tag 0
+*Oct  6 08:19:00.299:   10.0.23.0/30 via 0.0.0.0, metric 2, tag 0
+*Oct  6 08:19:00.299:   10.1.34.0/30 via 0.0.0.0, metric 1, tag 0
+*Oct  6 08:19:00.303:   10.2.45.0/30 via 0.0.0.0, metric 1, tag 0
+*Oct  6 08:19:00.303:   192.168.1.0/24 via 0.0.0.0, metric 4, tag 0
+*Oct  6 08:19:00.307:   192.168.5.0/24 via 10.2.45.2, metric 2, tag 0
+*Oct  6 08:19:01.031: RIP: received v2 update from 10.2.45.2 on FastEthernet1/0
+R4#undebug all
+*Oct  6 08:19:01.031:      10.2.45.0/30 via 0.0.0.0 in 1 hops
+*Oct  6 08:19:01.031:      192.168.5.0/24 via 0.0.0.0 in 1 hops
+R4#undebug all
+*Oct  6 08:19:17.539: RIP: sending v2 update to 224.0.0.9 via FastEthernet0/0 (10.1.34.2)
+*Oct  6 08:19:17.539: RIP: build update entries
+*Oct  6 08:19:17.539:   10.2.45.0/30 via 0.0.0.0, metric 1, tag 0
+*Oct  6 08:19:17.539:   192.168.5.0/24 via 0.0.0.0, metric 2, tag 0
+R4#undebug all
+*Oct  6 08:19:27.227: RIP: received v2 update from 10.2.45.2 on FastEthernet1/0
+*Oct  6 08:19:27.227:      10.2.45.0/30 via 0.0.0.0 in 1 hops
+*Oct  6 08:19:27.227:      192.168.5.0/24 via 0.0.0.0 in 1 hops
+*Oct  6 08:19:27.387: RIP: sending v2 update to 224.0.0.9 via FastEthernet1/0 (10.2.45.1)
+*Oct  6 08:19:27.387: RIP: build update entries
+*Oct  6 08:19:27.391:   10.0.12.0/30 via 0.0.0.0, metric 3, tag 0
+*Oct  6 08:19:27.391:   10.0.13.0/30 via 0.0.0.0, metric 2, tag 0
+*Oct  6 08:19:27.391:   10.0.23.0/30 via 0.0.0.0, metric 2, tag 0
+*Oct  6 08:19:27.391:   10.1.34.0/30 via 0.0.0.0, metric 1, tag 0
+*Oct  6 08:19:27.391:   10.2.45.0/30 via 0.0.0.0, metric 1, tag 0
+R4#undebug all
+*Oct  6 08:19:27.391:   192.168.1.0/24 via 0.0.0.0, metric 4, tag 0
+*Oct  6 08:19:27.391:   192.168.5.0/24 via 10.2.45.2, metric 2, tag 0
+R4#undebug all
+All possible debugging has been turned off
+
+
+R5#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24, 2 known subnets
+  Attached (2 connections)
+  Variably subnetted with 2 masks
+  Redistributing via rip
+C        192.168.5.0/24 is directly connected, FastEthernet1/0
+L        192.168.5.1/32 is directly connected, FastEthernet1/0
+
+
+R4#show clock
+*08:25:01.259 UTC Tue Oct 6 2026
+R4#show clock
+*08:25:07.023 UTC Tue Oct 6 2026
+R4#show clock
+*08:25:17.795 UTC Tue Oct 6 2026
+
+
+R5#show clock
+*07:59:02.187 UTC Tue Oct 6 2026
+R5#show clock
+*07:59:07.991 UTC Tue Oct 6 2026
+R5#show clock
+*07:59:18.559 UTC Tue Oct 6 2026
+
+
+PC1> ping 192.168.5.10 -t
+
+84 bytes from 192.168.5.10 icmp_seq=1 ttl=59 time=72.298 ms
+84 bytes from 192.168.5.10 icmp_seq=2 ttl=59 time=61.284 ms
+84 bytes from 192.168.5.10 icmp_seq=3 ttl=59 time=54.113 ms
+84 bytes from 192.168.5.10 icmp_seq=4 ttl=59 time=62.476 ms
+84 bytes from 192.168.5.10 icmp_seq=5 ttl=59 time=54.319 ms
+84 bytes from 192.168.5.10 icmp_seq=6 ttl=59 time=73.376 ms
+84 bytes from 192.168.5.10 icmp_seq=7 ttl=59 time=74.016 ms
+84 bytes from 192.168.5.10 icmp_seq=8 ttl=59 time=56.080 ms
+84 bytes from 192.168.5.10 icmp_seq=9 ttl=59 time=61.944 ms
+84 bytes from 192.168.5.10 icmp_seq=10 ttl=59 time=81.139 ms
+84 bytes from 192.168.5.10 icmp_seq=11 ttl=59 time=97.384 ms
+84 bytes from 192.168.5.10 icmp_seq=12 ttl=59 time=62.665 ms
+84 bytes from 192.168.5.10 icmp_seq=13 ttl=59 time=63.043 ms
+84 bytes from 192.168.5.10 icmp_seq=14 ttl=59 time=56.151 ms
+84 bytes from 192.168.5.10 icmp_seq=15 ttl=59 time=74.548 ms
+84 bytes from 192.168.5.10 icmp_seq=16 ttl=59 time=103.993 ms
+84 bytes from 192.168.5.10 icmp_seq=17 ttl=59 time=63.370 ms
+84 bytes from 192.168.5.10 icmp_seq=18 ttl=59 time=64.361 ms
+84 bytes from 192.168.5.10 icmp_seq=19 ttl=59 time=54.342 ms
+84 bytes from 192.168.5.10 icmp_seq=20 ttl=59 time=56.120 ms
+84 bytes from 192.168.5.10 icmp_seq=21 ttl=59 time=56.249 ms
+84 bytes from 192.168.5.10 icmp_seq=22 ttl=59 time=63.116 ms
+192.168.5.10 icmp_seq=23 timeout
+*10.2.45.2 icmp_seq=24 ttl=251 time=78.859 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=25 ttl=251 time=42.709 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=26 ttl=251 time=44.885 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=27 ttl=251 time=51.295 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=28 ttl=251 time=43.779 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=29 ttl=251 time=45.958 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=30 ttl=251 time=53.797 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=31 ttl=251 time=45.642 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=32 ttl=251 time=63.009 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=33 ttl=251 time=62.126 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=34 ttl=251 time=67.251 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=35 ttl=251 time=55.546 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=36 ttl=251 time=58.362 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=37 ttl=251 time=65.248 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=38 ttl=251 time=44.291 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=39 ttl=251 time=52.874 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=40 ttl=251 time=61.122 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=41 ttl=251 time=42.971 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=42 ttl=251 time=52.477 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=43 ttl=251 time=46.017 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=44 ttl=251 time=64.260 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=45 ttl=251 time=52.197 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=46 ttl=251 time=43.005 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=47 ttl=251 time=67.671 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=48 ttl=251 time=53.341 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=49 ttl=251 time=44.850 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=50 ttl=251 time=44.233 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=51 ttl=251 time=42.720 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=52 ttl=251 time=53.250 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=53 ttl=251 time=44.558 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=54 ttl=251 time=44.656 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=55 ttl=251 time=59.563 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=56 ttl=251 time=51.392 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=57 ttl=251 time=42.061 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=58 ttl=251 time=43.907 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=59 ttl=251 time=61.248 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=60 ttl=251 time=64.810 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=61 ttl=251 time=52.150 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=62 ttl=251 time=53.921 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=63 ttl=251 time=61.968 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=64 ttl=251 time=45.849 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=65 ttl=251 time=66.703 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=66 ttl=251 time=73.270 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=67 ttl=251 time=63.804 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=68 ttl=251 time=58.922 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=69 ttl=251 time=63.386 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=70 ttl=251 time=69.545 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=71 ttl=251 time=63.067 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=72 ttl=251 time=66.136 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=73 ttl=251 time=62.725 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=74 ttl=251 time=54.177 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=75 ttl=251 time=75.948 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=76 ttl=251 time=60.734 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=77 ttl=251 time=52.948 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=78 ttl=251 time=50.017 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=79 ttl=251 time=75.284 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=80 ttl=251 time=52.048 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=81 ttl=251 time=41.604 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=82 ttl=251 time=45.046 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=83 ttl=251 time=84.293 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=84 ttl=251 time=85.249 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=85 ttl=251 time=72.909 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=86 ttl=251 time=42.292 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=87 ttl=251 time=44.122 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=88 ttl=251 time=42.465 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=89 ttl=251 time=73.388 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=90 ttl=251 time=64.546 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=91 ttl=251 time=69.913 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=92 ttl=251 time=54.754 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=93 ttl=251 time=65.430 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=94 ttl=251 time=76.964 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=95 ttl=251 time=59.018 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=96 ttl=251 time=55.926 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=97 ttl=251 time=66.531 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=98 ttl=251 time=63.608 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=99 ttl=251 time=52.735 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=100 ttl=251 time=65.891 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=101 ttl=251 time=45.056 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=102 ttl=251 time=54.658 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=103 ttl=251 time=62.082 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=104 ttl=251 time=59.577 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=105 ttl=251 time=65.380 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=106 ttl=251 time=73.814 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=107 ttl=251 time=43.678 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=108 ttl=251 time=65.236 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=109 ttl=251 time=53.983 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=110 ttl=251 time=45.328 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=111 ttl=251 time=62.597 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=112 ttl=251 time=42.648 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=113 ttl=251 time=48.660 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=114 ttl=251 time=55.722 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=115 ttl=251 time=56.755 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=116 ttl=251 time=61.920 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=117 ttl=251 time=55.176 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=118 ttl=251 time=44.388 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=119 ttl=251 time=44.698 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=120 ttl=251 time=44.050 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=121 ttl=251 time=44.253 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=122 ttl=251 time=57.721 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=123 ttl=251 time=64.567 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=124 ttl=251 time=54.525 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=125 ttl=251 time=55.538 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=126 ttl=251 time=55.762 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=127 ttl=251 time=55.670 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=128 ttl=251 time=72.160 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=129 ttl=251 time=44.247 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=130 ttl=251 time=51.853 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=131 ttl=251 time=44.723 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=132 ttl=251 time=53.542 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=133 ttl=251 time=72.833 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=134 ttl=251 time=72.324 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=135 ttl=251 time=53.106 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=136 ttl=251 time=68.758 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=137 ttl=251 time=56.363 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=138 ttl=251 time=64.980 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=139 ttl=251 time=62.714 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=140 ttl=251 time=63.833 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=141 ttl=251 time=64.794 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=142 ttl=251 time=46.099 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=143 ttl=251 time=63.545 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=144 ttl=251 time=66.224 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=145 ttl=251 time=72.964 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=146 ttl=251 time=56.847 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=147 ttl=251 time=66.969 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=148 ttl=251 time=42.126 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=149 ttl=251 time=44.381 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=150 ttl=251 time=50.674 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=151 ttl=251 time=47.444 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=152 ttl=251 time=42.185 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=153 ttl=251 time=45.140 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=154 ttl=251 time=62.600 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=155 ttl=251 time=90.147 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=156 ttl=251 time=59.483 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=157 ttl=251 time=55.967 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=158 ttl=251 time=63.994 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=159 ttl=251 time=46.907 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=160 ttl=251 time=52.100 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=161 ttl=251 time=61.322 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=162 ttl=251 time=43.760 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=163 ttl=251 time=44.857 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=164 ttl=251 time=56.152 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=165 ttl=251 time=56.253 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=166 ttl=251 time=43.262 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=167 ttl=251 time=47.165 ms (ICMP type:3, code:1, Destination host unreachable)
+^C
+PC1> trace 192.168.5.10
+trace to 192.168.5.10, 8 hops max, press Ctrl+C to stop
+ 1   192.168.1.1   9.011 ms  10.536 ms  9.043 ms
+ 2   10.0.12.2   19.843 ms  19.797 ms  19.472 ms
+ 3   10.0.23.2   30.277 ms  29.930 ms  31.623 ms
+ 4   *10.0.23.2   29.312 ms (ICMP type:3, code:1, Destination host unreachable)
+
+
+R5(config-router)#passive-interface fastEthernet0/0
+R5(config-router)#exit
+R5(config)#int f1/0
+R5(config-if)#shutdown
+R5(config-if)#end
+*Oct  6 08:06:08.883: is_up: FastEthernet1/0 0 state: 6 sub state: 1 line: 1
+*Oct  6 08:06:08.891: RT: interface FastEthernet1/0 removed from routing table
+*Oct  6 08:06:08.891: RT: del 192.168.5.0 via 0.0.0.0, connected metric [0/0]
+*Oct  6 08:06:08.895: RT: delete subnet route to 192.168.5.0/24
+*Oct  6 08:06:08.899: RT: del 192.168.5.1 via 0.0.0.0, connected metric [0/0]
+*Oct  6 08:06:08.903: RT: delete subnet route to 192.168.5.1/32
+R5(config-if)#end
+R5#
+*Oct  6 08:06:10.859: %LINK-5-CHANGED: Interface FastEthernet1/0, changed state to administratively down
+*Oct  6 08:06:10.863: is_up: FastEthernet1/0 0 state: 6 sub state: 1 line: 1
+R5#
+*Oct  6 08:06:11.023: %SYS-5-CONFIG_I: Configured from console by console
+*Oct  6 08:06:11.859: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet1/0, changed state to down
+R5#s
+*Oct  6 08:06:11.867: is_up: FastEthernet1/0 0 state: 6 sub state: 1 line: 1
+R5#show ip route 192.168.5.0
+% Network not in table
+R5#show ip route 192.168.5.0
+% Network not in table
+R5#
+*Oct  6 08:06:20.863: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:06:20.867: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:06:20.871: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:06:20.875: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:06:20.879: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:06:20.883: RT: rib update return code: 17
+*Oct  6 08:06:20.883: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+R5#show ip route 192.168.5.0
+% Network not in table
+R5#show ip route 192.168.5.0
+% Network not in table
+R5#show ip route 192.168.5.0
+% Network not in table
+R5#show ip route 192.168.5.0
+% Network not in table
+R5#show ip route 192.168.5.0
+% Network not in table
+R5#show ip route 192.168.5.0
+% Network not in table
+R5#
+*Oct  6 08:06:48.971: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:06:48.975: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:06:48.979: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:06:48.979: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:06:48.979: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:06:48.979: RT: rib update return code: 17
+*Oct  6 08:06:48.979: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+R5#show ip route 192.168.5.0
+% Network not in table
+R5#show ip route 192.168.5.0
+% Network not in table
+R5#show ip route 192.168.5.0
+% Network not in table
+R5#show ip route 192.168.5.0
+% Network not in table
+R5#
+*Oct  6 08:07:16.263: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:07:16.267: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:07:16.271: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:07:16.275: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:07:16.279: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:07:16.283: RT: rib update return code: 17
+*Oct  6 08:07:16.287: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+R5#show ip route 192.168.5.0
+% Network not in table
+R5#show ip route 192.168.5.0
+% Network not in table
+R5#show ip route 192.168.5.0
+% Network not in table
+R5#show ip route 192.168.5.0
+% Network not in table
+R5#show ip route 192.168.5.0
+% Network not in table
+R5#
+*Oct  6 08:07:46.231: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:07:46.235: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:07:46.239: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:07:46.239: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:07:46.239: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:07:46.239: RT: rib update return code: 17
+*Oct  6 08:07:46.239: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+R5#show ip route 192.168.5.0
+% Network not in table
+R5#show ip route 192.168.5.0
+% Network not in table
+R5#show ip route 192.168.5.0
+% Network not in table
+R5#
+*Oct  6 08:08:12.911: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:08:12.911: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:08:12.911: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:08:12.911: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:08:12.911: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:08:12.911: RT: rib update return code: 17
+*Oct  6 08:08:12.911: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+R5#show ip route 192.168.5.0
+% Network not in table
+R5#show ip route 192.168.5.0
+% Network not in table
+R5#
+*Oct  6 08:08:41.811: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:08:41.811: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:08:41.811: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:08:41.811: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:08:41.811: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:08:41.811: RT: rib update return code: 17
+*Oct  6 08:08:41.811: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+R5#
+*Oct  6 08:08:56.767: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:08:56.771: RT: rib update return code: 5
+R5#
+*Oct  6 08:09:08.295: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:09:08.295: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:09:08.295: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:09:08.295: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:09:08.295: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:09:08.295: RT: rib update return code: 17
+*Oct  6 08:09:08.295: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:09:08.295: RT: updating rip 192.168.5.0/24 (0x0):
+
+R5#    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  6 08:09:08.295: RT: rib update return code: 5
+R5#undebug all
+All possible debugging has been turned off
+
+
+R4#debug ip routing
+IP routing debugging is on
+R4#
+*Oct  6 08:30:24.791: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  6 08:30:24.791: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  6 08:30:24.791: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  6 08:30:24.791: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+R4#
+*Oct  6 08:30:29.343: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  6 08:30:29.347: RT: rib update return code: 17
+*Oct  6 08:30:29.351: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+R4#
+*Oct  6 08:30:56.923: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  6 08:30:56.923: RT: rib update return code: 17
+*Oct  6 08:30:56.923: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+R4#
+*Oct  6 08:31:17.955: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  6 08:31:17.959: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  6 08:31:17.963: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  6 08:31:17.971: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+R4#
+*Oct  6 08:31:24.243: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  6 08:31:24.247: RT: rib update return code: 17
+*Oct  6 08:31:24.247: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+R4#show ip route 192.168.5.0
+*Oct  6 08:31:52.455: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  6 08:31:52.455: RT: rib update return code: 17
+*Oct  6 08:31:52.455: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+R4#show ip route 192.168.5.0
+*Oct  6 08:32:01.719: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  6 08:32:01.723: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  6 08:32:01.723: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  6 08:32:01.723: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+R4#show ip route 192.168.5.0
+*Oct  6 08:32:45.575: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  6 08:32:45.579: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  6 08:32:45.583: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  6 08:32:45.583: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+R4#show ip route 192.168.5.0
+*Oct  6 08:33:30.563: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  6 08:33:30.563: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  6 08:33:30.563: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  6 08:33:30.563: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 1
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:01:53 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:01:53 ago, via FastEthernet1/0
+      Route metric is 1, traffic share count is 1
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 1
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:02:03 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:02:03 ago, via FastEthernet1/0
+      Route metric is 1, traffic share count is 1
+R4#
+*Oct  6 08:34:11.319: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  6 08:34:11.323: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  6 08:34:11.327: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  6 08:34:11.327: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 1
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:02:29 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:02:29 ago, via FastEthernet1/0
+      Route metric is 1, traffic share count is 1
+R4#
+*Oct  6 08:34:55.551: RT: del 192.168.5.0 via 10.2.45.2, rip metric [120/1]
+*Oct  6 08:34:55.555: RT: delete network route to 192.168.5.0/24
+R4#
+*Oct  6 08:35:00.835: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  6 08:35:00.839: RT: rib update return code: 5
+*Oct  6 08:35:01.315: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  6 08:35:01.319: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  6 08:35:01.323: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  6 08:35:01.327: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  6 08:35:01.331: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  6 08:35:01.335: RT: rib update return code: 5
+R4#undebug all
+All possible debugging has been turned off

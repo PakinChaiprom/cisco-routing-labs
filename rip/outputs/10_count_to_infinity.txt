@@ -1,0 +1,845 @@
+Step 1: checks before the test
+
+PC1> ping 192.168.5.10
+
+84 bytes from 192.168.5.10 icmp_seq=1 ttl=59 time=81.572 ms
+84 bytes from 192.168.5.10 icmp_seq=2 ttl=59 time=57.374 ms
+^C
+
+R4#show ip int f1/0 | in Split
+  Split horizon is disabled
+R4#show ip pro
+*** IP Routing is NSF aware ***
+
+Routing Protocol is "rip"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Sending updates every 30 seconds, next due in 20 seconds
+  Invalid after 180 seconds, hold down 0, flushed after 240
+  Redistributing: rip
+  Default version control: send version 2, receive version 2
+    Interface             Send  Recv  Triggered RIP  Key-chain
+    FastEthernet0/0       2     2
+    FastEthernet1/0       1     1
+  Automatic network summarization is not in effect
+  Maximum path: 4
+  Routing for Networks:
+    10.0.0.0
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+    10.2.45.2            120      00:00:10
+    10.1.34.1            120      00:00:32
+  Distance: (default is 120)
+
+
+R5#show ip pro
+*** IP Routing is NSF aware ***
+
+Routing Protocol is "rip"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Sending updates every 30 seconds, next due in 14 seconds
+  Invalid after 180 seconds, hold down 0, flushed after 240
+  Redistributing: rip
+  Default version control: send version 2, receive version 2
+    Interface             Send  Recv  Triggered RIP  Key-chain
+    FastEthernet0/0       1     1
+  Automatic network summarization is not in effect
+  Maximum path: 4
+  Routing for Networks:
+    10.0.0.0
+    192.168.5.0
+  Passive Interface(s):
+    FastEthernet1/0
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+    10.2.45.1            120      00:00:04
+  Distance: (default is 120)
+
+R5#show ip ro rip
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 6 subnets, 2 masks
+R        10.0.12.0/30 [120/3] via 10.2.45.1, 00:00:19, FastEthernet0/0
+R        10.0.13.0/30 [120/2] via 10.2.45.1, 00:00:19, FastEthernet0/0
+R        10.0.23.0/30 [120/2] via 10.2.45.1, 00:00:19, FastEthernet0/0
+R        10.1.34.0/30 [120/1] via 10.2.45.1, 00:00:19, FastEthernet0/0
+R     192.168.1.0/24 [120/4] via 10.2.45.1, 00:00:19, FastEthernet0/0
+
+
+Step 2: routing loop, then count-to-infinity
+
+
+PC1> ping 192.168.5.10 -t
+
+84 bytes from 192.168.5.10 icmp_seq=1 ttl=59 time=73.124 ms
+84 bytes from 192.168.5.10 icmp_seq=2 ttl=59 time=61.168 ms
+84 bytes from 192.168.5.10 icmp_seq=3 ttl=59 time=65.159 ms
+84 bytes from 192.168.5.10 icmp_seq=4 ttl=59 time=70.073 ms
+84 bytes from 192.168.5.10 icmp_seq=5 ttl=59 time=66.993 ms
+84 bytes from 192.168.5.10 icmp_seq=6 ttl=59 time=78.466 ms
+84 bytes from 192.168.5.10 icmp_seq=7 ttl=59 time=58.385 ms
+84 bytes from 192.168.5.10 icmp_seq=8 ttl=59 time=70.442 ms
+84 bytes from 192.168.5.10 icmp_seq=9 ttl=59 time=67.098 ms
+84 bytes from 192.168.5.10 icmp_seq=10 ttl=59 time=66.215 ms
+84 bytes from 192.168.5.10 icmp_seq=11 ttl=59 time=71.782 ms
+84 bytes from 192.168.5.10 icmp_seq=12 ttl=59 time=60.754 ms
+84 bytes from 192.168.5.10 icmp_seq=13 ttl=59 time=72.371 ms
+84 bytes from 192.168.5.10 icmp_seq=14 ttl=59 time=81.468 ms
+84 bytes from 192.168.5.10 icmp_seq=15 ttl=59 time=60.659 ms
+84 bytes from 192.168.5.10 icmp_seq=16 ttl=59 time=54.188 ms
+84 bytes from 192.168.5.10 icmp_seq=17 ttl=59 time=72.302 ms
+84 bytes from 192.168.5.10 icmp_seq=18 ttl=59 time=64.856 ms
+84 bytes from 192.168.5.10 icmp_seq=19 ttl=59 time=82.686 ms
+84 bytes from 192.168.5.10 icmp_seq=20 ttl=59 time=58.618 ms
+84 bytes from 192.168.5.10 icmp_seq=21 ttl=59 time=65.818 ms
+84 bytes from 192.168.5.10 icmp_seq=22 ttl=59 time=57.380 ms
+84 bytes from 192.168.5.10 icmp_seq=23 ttl=59 time=55.499 ms
+84 bytes from 192.168.5.10 icmp_seq=24 ttl=59 time=56.544 ms
+84 bytes from 192.168.5.10 icmp_seq=25 ttl=59 time=58.892 ms
+84 bytes from 192.168.5.10 icmp_seq=26 ttl=59 time=55.731 ms
+84 bytes from 192.168.5.10 icmp_seq=27 ttl=59 time=56.571 ms
+84 bytes from 192.168.5.10 icmp_seq=28 ttl=59 time=57.799 ms
+*10.2.45.2 icmp_seq=29 ttl=251 time=62.693 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=30 ttl=251 time=46.574 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=31 ttl=251 time=43.735 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=32 ttl=251 time=46.114 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=33 ttl=251 time=49.655 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=34 ttl=251 time=55.676 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=35 ttl=251 time=48.230 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=36 ttl=251 time=60.223 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.2 icmp_seq=37 ttl=251 time=49.215 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.2.45.1 icmp_seq=38 ttl=252 time=405.154 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=39 ttl=252 time=366.721 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=40 ttl=252 time=395.614 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=41 ttl=252 time=343.113 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=42 ttl=252 time=348.798 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=43 ttl=252 time=373.682 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=44 ttl=252 time=352.232 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=45 ttl=252 time=354.585 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=46 ttl=252 time=346.719 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=47 ttl=252 time=353.156 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=48 ttl=252 time=570.205 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=49 ttl=252 time=589.304 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=50 ttl=252 time=376.429 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=51 ttl=252 time=346.441 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=52 ttl=252 time=426.469 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=53 ttl=252 time=550.638 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=54 ttl=252 time=345.387 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=55 ttl=252 time=347.892 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=56 ttl=252 time=347.470 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=57 ttl=252 time=409.370 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=58 ttl=252 time=348.553 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=59 ttl=252 time=360.418 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=60 ttl=252 time=347.624 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=61 ttl=252 time=359.257 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=62 ttl=252 time=361.446 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=63 ttl=252 time=356.682 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=64 ttl=252 time=539.601 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=65 ttl=252 time=369.882 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=66 ttl=252 time=340.844 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=67 ttl=252 time=394.835 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=68 ttl=252 time=346.057 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=69 ttl=252 time=501.712 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=70 ttl=252 time=548.455 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=71 ttl=252 time=342.806 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=72 ttl=252 time=481.375 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=73 ttl=252 time=346.222 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=74 ttl=252 time=361.781 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=75 ttl=252 time=530.297 ms (ICMP type:11, code:0, TTL expired in transit)
+192.168.5.10 icmp_seq=76 timeout
+*10.2.45.1 icmp_seq=77 ttl=252 time=17.695 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=78 ttl=252 time=367.460 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=79 ttl=252 time=350.878 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=80 ttl=252 time=348.997 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=81 ttl=252 time=495.358 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=82 ttl=252 time=348.703 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=83 ttl=252 time=396.338 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=84 ttl=252 time=349.615 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=85 ttl=252 time=352.122 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=86 ttl=252 time=357.267 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=87 ttl=252 time=399.769 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.2.45.1 icmp_seq=88 ttl=252 time=350.242 ms (ICMP type:11, code:0, TTL expired in transit)
+*10.0.23.2 icmp_seq=89 ttl=253 time=24.733 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.0.23.2 icmp_seq=90 ttl=253 time=28.845 ms (ICMP type:3, code:1, Destination host unreachable)
+*10.0.23.2 icmp_seq=91 ttl=253 time=39.443 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=92 ttl=255 time=8.619 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=93 ttl=255 time=4.649 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=94 ttl=255 time=7.266 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=95 ttl=255 time=5.387 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=96 ttl=255 time=8.847 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=97 ttl=255 time=7.692 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=98 ttl=255 time=8.456 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=99 ttl=255 time=1.582 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=100 ttl=255 time=9.149 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=101 ttl=255 time=4.956 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=102 ttl=255 time=8.049 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=103 ttl=255 time=6.196 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=104 ttl=255 time=9.203 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=105 ttl=255 time=4.189 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=106 ttl=255 time=7.064 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=107 ttl=255 time=6.680 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=108 ttl=255 time=9.069 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=109 ttl=255 time=9.612 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=110 ttl=255 time=7.693 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=111 ttl=255 time=7.385 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=112 ttl=255 time=7.687 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=113 ttl=255 time=7.729 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=114 ttl=255 time=5.035 ms (ICMP type:3, code:1, Destination host unreachable)
+*192.168.1.1 icmp_seq=115 ttl=255 time=5.653 ms (ICMP type:3, code:1, Destination host unreachable)
+^C
+
+
+R4#debug ip rou
+IP routing debugging is on
+R4#
+*Oct  7 08:26:57.651: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:26:57.655: RT: rib update return code: 19
+*Oct  7 08:26:57.655: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:26:57.659: RT: rib update return code: 19
+*Oct  7 08:26:57.663: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:26:57.667: RT: rib update return code: 19
+*Oct  7 08:26:57.667: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:26:57.667: RT: rib update return code: 17
+*Oct  7 08:26:57.667: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+R4#
+*Oct  7 08:26:57.667: RT: rib update return code: 17
+*Oct  7 08:26:57.667: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:26:57.667: RT: rib update return code: 19
+*Oct  7 08:26:57.667: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+R4#
+*Oct  7 08:27:10.315: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  7 08:27:10.319: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  7 08:27:10.323: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  7 08:27:10.323: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+R4#
+*Oct  7 08:27:57.375: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  7 08:27:57.379: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  7 08:27:57.383: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  7 08:27:57.387: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 1
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:01:13 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:01:13 ago, via FastEthernet1/0
+      Route metric is 1, traffic share count is 1
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 1
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:01:15 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:01:15 ago, via FastEthernet1/0
+      Route metric is 1, traffic share count is 1
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 1
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:01:18 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:01:18 ago, via FastEthernet1/0
+      Route metric is 1, traffic share count is 1
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 1
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:01:20 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:01:20 ago, via FastEthernet1/0
+      Route metric is 1, traffic share count is 1
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 1
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:01:21 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:01:21 ago, via FastEthernet1/0
+      Route metric is 1, traffic share count is 1
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 1
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:01:22 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:01:22 ago, via FastEthernet1/0
+      Route metric is 1, traffic share count is 1
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 1
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:01:23 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:01:23 ago, via FastEthernet1/0
+      Route metric is 1, traffic share count is 1
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 1
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:01:25 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:01:25 ago, via FastEthernet1/0
+      Route metric is 1, traffic share count is 1
+R4#show ip route 192.168.5.0
+*Oct  7 08:28:23.063: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:28:23.067: RT: rib update return code: 19
+*Oct  7 08:28:23.067: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:28:23.067: RT: rib update return code: 19
+*Oct  7 08:28:23.067: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:28:23.067: RT: rib update return code: 19
+*Oct  7 08:28:23.067: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:28:23.067: RT: rib update return code: 17
+*Oct  7 08:28:23.067: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 3
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:00:01 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:00:01 ago, via FastEthernet1/0
+      Route metric is 3, traffic share count is 1
+R4#
+*Oct  7 08:28:23.067: RT: rib update return code: 17
+*Oct  7 08:28:23.067: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:28:23.067: RT: rib update return code: 19
+*Oct  7 08:28:23.067: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:28:23.067: RT: rip's 192.168.5.0/24 (via 10.2.45.2) metric changed from distance/metric [120/1] to [120/3]
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 3
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:00:03 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:00:03 ago, via FastEthernet1/0
+      Route metric is 3, traffic share count is 1
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 5
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:00:00 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:00:00 ago, via FastEthernet1/0
+      Route metric is 5, traffic share count is 1
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 5
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:00:01 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:00:01 ago, via FastEthernet1/0
+      Route metric is 5, traffic share count is 1
+R4#show ip route 192.168.5.0
+*Oct  7 08:28:27.071: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:28:27.075: RT: rip's 192.168.5.0/24 (via 10.2.45.2) metric changed from distance/metric [120/3] to [120/5]
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 5
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:00:03 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:00:03 ago, via FastEthernet1/0
+      Route metric is 5, traffic share count is 1
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 5
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:00:04 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:00:04 ago, via FastEthernet1/0
+      Route metric is 5, traffic share count is 1
+R4#
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 5
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:00:04 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:00:04 ago, via FastEthernet1/0
+      Route metric is 5, traffic share count is 1
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 7
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:00:02 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:00:02 ago, via FastEthernet1/0
+      Route metric is 7, traffic share count is 1
+R4#
+*Oct  7 08:28:31.099: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:28:31.099: RT: rip's 192.168.5.0/24 (via 10.2.45.2) metric changed from distance/metric [120/5] to [120/7]
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 7
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:00:04 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:00:04 ago, via FastEthernet1/0
+      Route metric is 7, traffic share count is 1
+R4#show ip route 192.168.5.0
+*Oct  7 08:28:35.139: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:28:35.143: RT: rip's 192.168.5.0/24 (via 10.2.45.2) metric changed from distance/metric [120/7] to [120/9]
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 11
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:00:01 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:00:01 ago, via FastEthernet1/0
+      Route metric is 11, traffic share count is 1
+R4#show ip route 192.168.5.0
+*Oct  7 08:28:39.211: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:28:39.215: RT: rip's 192.168.5.0/24 (via 10.2.45.2) metric changed from distance/metric [120/9] to [120/11]
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 11
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:00:03 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:00:03 ago, via FastEthernet1/0
+      Route metric is 11, traffic share count is 1
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 11
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:00:04 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:00:04 ago, via FastEthernet1/0
+      Route metric is 11, traffic share count is 1
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 13
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:00:01 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:00:01 ago, via FastEthernet1/0
+      Route metric is 13, traffic share count is 1
+R4#show ip route 192.168.5.0
+*Oct  7 08:28:43.263: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:28:43.263: RT: rip's 192.168.5.0/24 (via 10.2.45.2) metric changed from distance/metric [120/11] to [120/13]
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 13
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:00:02 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:00:02 ago, via FastEthernet1/0
+      Route metric is 13, traffic share count is 1
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 13
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:00:04 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:00:04 ago, via FastEthernet1/0
+      Route metric is 13, traffic share count is 1
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 15
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:00:00 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:00:00 ago, via FastEthernet1/0
+      Route metric is 15, traffic share count is 1
+R4#show ip route 192.168.5.0
+*Oct  7 08:28:47.299: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:28:47.303: RT: rip's 192.168.5.0/24 (via 10.2.45.2) metric changed from distance/metric [120/13] to [120/15]
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 15
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:00:01 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:00:01 ago, via FastEthernet1/0
+      Route metric is 15, traffic share count is 1
+R4#show ip route 192.168.5.0
+*Oct  7 08:28:48.683: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  7 08:28:48.683: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  7 08:28:48.683: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  7 08:28:48.683: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  7 08:28:49.275: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:28:49.275: RT: rib update return code: 19
+*Oct  7 08:28:49.275: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:28:49.275: RT: rib update return code: 19
+R4#show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 15
+  Redistributing via rip
+  Last update from 10.2.45.2 on FastEthernet1/0, 00:00:02 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.2, from 10.2.45.2, 00:00:02 ago, via FastEthernet1/0
+      Route metric is 15, traffic share count is 1
+R4#
+*Oct  7 08:28:49.275: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:28:49.275: RT: rib update return code: 19
+*Oct  7 08:28:49.275: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:28:49.275: RT: rib update return code: 17
+*Oct  7 08:28:49.275: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:28:49.275: RT: rib update return code: 17
+*Oct  7 08:28:49.275: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:28:49.275: RT: rib update return code: 19
+*Oct  7 08:28:49.275: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+R4#show ip route 192.168.5.0
+% Network not in table
+R4#show ip route 192.168.5.0
+% Network not in table
+R4#
+*Oct  7 08:28:51.311: RT: del 192.168.5.0 via 10.2.45.2, rip metric [120/15]
+*Oct  7 08:28:51.315: RT: delete network route to 192.168.5.0/24
+*Oct  7 08:28:51.319: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:28:51.323: RT: rib update return code: 5
+R4#
+*Oct  7 08:28:52.403: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.1.34.1 Fa0/0  1048578
+
+*Oct  7 08:28:52.403: RT: rib update return code: 5
+R4#
+*Oct  7 08:29:16.539: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:29:16.543: RT: rib update return code: 19
+*Oct  7 08:29:16.543: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:29:16.543: RT: rib update return code: 19
+*Oct  7 08:29:16.543: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:29:16.543: RT: rib update return code: 19
+*Oct  7 08:29:16.543: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:29:16.543: RT: rib update return code: 17
+*Oct  7 08:29:16.543: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+R4#
+*Oct  7 08:29:16.543: RT: rib update return code: 17
+*Oct  7 08:29:16.543: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:29:16.543: RT: rib update return code: 19
+*Oct  7 08:29:16.543: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.2.45.2 Fa1/0  1048578
+
+*Oct  7 08:29:16.543: RT: rib update return code: 5
+R4#undebug all
+All possible debugging has been turned off
+
+
+R5#debug ip rou
+IP routing debugging is on
+R5#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R5(config)#rout
+*Oct  7 08:27:59.811: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:27:59.815: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:27:59.819: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:27:59.823: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:27:59.827: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:27:59.831: RT: rib update return code: 17
+*Oct  7 08:27:59.831: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:27:59.835: RT: updating rip 192.168.5.0/24 (0x0):
+
+R5(config)#router     via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:27:59.835: RT: rib update return code: 12
+R5(config)#router rip
+R5(config-router)#pass f0/0
+R5(config-router)#int f1/0
+R5(config-if)#shut
+R5(config-if)#s
+*Oct  7 08:28:17.271: is_up: FastEthernet1/0 0 state: 6 sub state: 1 line: 1
+*Oct  7 08:28:17.275: RT: interface FastEthernet1/0 removed from routing table
+*Oct  7 08:28:17.275: RT: del 192.168.5.0 via 0.0.0.0, connected metric [0/0]
+*Oct  7 08:28:17.275: RT: delete subnet route to 192.168.5.0/24
+*Oct  7 08:28:17.275: RT: del 192.168.5.1 via 0.0.0.0, connected metric [0/0]
+*Oct  7 08:28:17.279: RT: delete subnet route to 192.168.5.1/32
+R5(config-if)#s
+*Oct  7 08:28:19.263: %LINK-5-CHANGED: Interface FastEthernet1/0, changed state to administratively down
+R5(config-if)#so
+*Oct  7 08:28:19.271: is_up: FastEthernet1/0 0 state: 6 sub state: 1 line: 1
+*Oct  7 08:28:20.263: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet1/0, changed state to down
+R5(config-if)#
+*Oct  7 08:28:20.271: is_up: FastEthernet1/0 0 state: 6 sub state: 1 line: 1
+R5(config-if)#do show ip
+*Oct  7 08:28:27.171: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:28:27.179: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:28:27.179: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:28:27.179: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:28:27.179: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:28:27.179: RT: rib update return code: 17
+*Oct  7 08:28:27.179: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:28:27.179: RT: updating rip 192.168.5.0/24 (0x0):
+
+R5(config-if)#do show ip rout    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:28:27.179: RT: add 192.168.5.0/24 via 10.2.45.1, rip metric [120/2]
+R5(config-if)#do show ip route 192.168.5.0
+Routing entry for 192.168.5.0/24
+  Known via "rip", distance 120, metric 2
+  Redistributing via rip
+  Last update from 10.2.45.1 on FastEthernet0/0, 00:00:05 ago
+  Routing Descriptor Blocks:
+  * 10.2.45.1, from 10.2.45.1, 00:00:05 ago, via FastEthernet0/0
+      Route metric is 2, traffic share count is 1
+R5(config-if)#router rip
+R5(config-router)#no pass f0/0
+R5(config-router)#end
+R5#
+*Oct  7 08:28:50.063: %SYS-5-CONFIG_I: Configured from console by console
+R5#
+*Oct  7 08:28:53.955: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:28:53.959: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:28:53.963: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:28:53.963: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:28:53.963: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:28:53.963: RT: rib update return code: 17
+*Oct  7 08:28:53.963: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:28:53.963: RT: updating rip 192.168.5.0/24 (0x0):
+
+R5#    via 10.2.45.1 Fa0/0  1048578
+
+R5#
+*Oct  7 08:29:14.371: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:29:14.375: RT: rip's 192.168.5.0/24 (via 10.2.45.1) metric changed from distance/metric [120/2] to [120/4]
+R5#
+*Oct  7 08:29:18.371: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:29:18.375: RT: rip's 192.168.5.0/24 (via 10.2.45.1) metric changed from distance/metric [120/4] to [120/6]
+R5#
+*Oct  7 08:29:20.359: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:29:20.359: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:29:20.359: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:29:20.359: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:29:20.359: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:29:20.359: RT: rib update return code: 17
+*Oct  7 08:29:20.359: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:29:20.359: RT: updating rip 192.168.5.0/24 (0x0):
+
+R5#    via 10.2.45.1 Fa0/0  1048578
+
+R5#
+*Oct  7 08:29:22.411: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:29:22.415: RT: rip's 192.168.5.0/24 (via 10.2.45.1) metric changed from distance/metric [120/6] to [120/8]
+R5#
+*Oct  7 08:29:26.411: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:29:26.415: RT: rip's 192.168.5.0/24 (via 10.2.45.1) metric changed from distance/metric [120/8] to [120/10]
+R5#
+*Oct  7 08:29:30.531: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:29:30.535: RT: rip's 192.168.5.0/24 (via 10.2.45.1) metric changed from distance/metric [120/10] to [120/12]
+R5#
+*Oct  7 08:29:34.571: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:29:34.575: RT: rip's 192.168.5.0/24 (via 10.2.45.1) metric changed from distance/metric [120/12] to [120/14]
+R5#
+*Oct  7 08:29:38.595: RT: del 192.168.5.0 via 10.2.45.1, rip metric [120/14]
+*Oct  7 08:29:38.595: RT: delete network route to 192.168.5.0/24
+*Oct  7 08:29:38.595: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:29:38.595: RT: rib update return code: 5
+R5#
+*Oct  7 08:29:42.603: RT: updating rip 192.168.5.0/24 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:29:42.607: RT: rib update return code: 5
+R5#
+*Oct  7 08:29:49.787: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:29:49.787: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:29:49.787: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:29:49.787: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:29:49.787: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:29:49.787: RT: rib update return code: 17
+*Oct  7 08:29:49.787: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:29:49.787: RT: updating rip 192.168.5.0/24 (0x0):
+
+R5#    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:29:49.787: RT: rib update return code: 5
+R5#
+*Oct  7 08:30:17.443: RT: updating rip 10.0.12.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:30:17.447: RT: updating rip 10.0.13.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:30:17.451: RT: updating rip 10.0.23.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:30:17.455: RT: updating rip 10.1.34.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:30:17.459: RT: updating rip 10.2.45.0/30 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:30:17.463: RT: rib update return code: 17
+*Oct  7 08:30:17.463: RT: updating rip 192.168.1.0/24 (0x0):
+    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:30:17.467: RT: updating rip 192.168.5.0/24 (0x0):
+
+R5#un    via 10.2.45.1 Fa0/0  1048578
+
+*Oct  7 08:30:17.467: RT: rib update return code: 5
+R5#undebug all
+All possible debugging has been turned off
