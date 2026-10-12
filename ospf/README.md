@@ -1,3 +1,5 @@
+English | [ภาษาไทย](README.th.md)
+
 # OSPF: Single Area, Link Failure, Multi-Area and Virtual Link (GNS3)
 
 Five Cisco 7200 routers running OSPF. The lab measures how long traffic is down after three kinds of link failure, then splits the network into areas in a way that breaks it and repairs it with a virtual link. Every result is backed by `show` output and packet captures.
