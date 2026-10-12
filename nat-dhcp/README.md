@@ -1,3 +1,5 @@
+English | [ภาษาไทย](README.th.md)
+
 # NAT and DHCP on a Cisco Router (GNS3)
 
 Static NAT, PAT, dynamic NAT and a DHCP server on one Cisco 7200, each verified with `show` commands and with packet captures on both sides of the router.
