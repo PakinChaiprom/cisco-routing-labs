@@ -1,3 +1,5 @@
+English | [ภาษาไทย](README.th.md)
+
 # RIP: Hop Count, Slow Convergence, Routing Loop and Count-to-Infinity (GNS3)
 
 RIP on the same five routers and the same addressing as my [OSPF lab](../ospf/). The same link fails in the same three ways, so the two protocols can be compared directly. The last part builds a real routing loop and captures RIP counting to infinity.

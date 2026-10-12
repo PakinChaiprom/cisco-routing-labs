@@ -1,3 +1,5 @@
+English | [ภาษาไทย](README.th.md)
+
 # Cisco Routing Labs
 
 Network labs I built and verified in GNS3. Each lab has the topology, the router configuration at every stage, the `show` output, and packet captures.

@@ -1,3 +1,5 @@
+English | [ภาษาไทย](README.th.md)
+
 # VLANs, 802.1Q Trunking and Inter-VLAN Routing (GNS3)
 
 Two switches, seven hosts and one router. The lab starts with one flat network, splits it into VLANs, carries the VLANs between switches on an 802.1Q trunk, breaks the trunk on purpose with a native VLAN mismatch, and then routes between the VLANs with a router-on-a-stick and with switch virtual interfaces (SVIs). Every step is checked with `show` output and Wireshark.
