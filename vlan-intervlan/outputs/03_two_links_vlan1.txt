@@ -1,0 +1,155 @@
+SW1#show spanning-tree
+
+ VLAN1 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, address c401.07b4.0002
+  Configured hello time 2, max age 20, forward delay 15
+  We are the root of the spanning tree
+  Topology change flag not set, detected flag not set
+  Number of topology changes 1 last change occurred 00:06:46 ago
+          from FastEthernet1/14
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 1, topology change 0, notification 0, aging 300
+
+ Port 55 (FastEthernet1/14) of VLAN1 is forwarding
+   Port path cost 19, Port priority 128, Port Identifier 128.55.
+   Designated root has priority 32768, address c401.07b4.0002
+   Designated bridge has priority 32768, address c401.07b4.0002
+   Designated port id is 128.55, designated path cost 0
+   Timers: message age 0, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   BPDU: sent 220, received 3
+
+ Port 56 (FastEthernet1/15) of VLAN1 is forwarding
+   Port path cost 19, Port priority 128, Port Identifier 128.56.
+   Designated root has priority 32768, address c401.07b4.0002
+   Designated bridge has priority 32768, address c401.07b4.0002
+   Designated port id is 128.56, designated path cost 0
+   Timers: message age 0, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   BPDU: sent 219, received 1
+
+
+ VLAN10 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, address c401.07b4.0000
+  Configured hello time 2, max age 20, forward delay 15
+  We are the root of the spanning tree
+  Topology change flag not set, detected flag not set
+  Number of topology changes 1 last change occurred 00:06:49 ago
+          from FastEthernet1/1
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 1, topology change 0, notification 0, aging 300
+
+ Port 42 (FastEthernet1/1) of VLAN10 is forwarding
+   Port path cost 19, Port priority 128, Port Identifier 128.42.
+   Designated root has priority 32768, address c401.07b4.0000
+   Designated bridge has priority 32768, address c401.07b4.0000
+   Designated port id is 128.42, designated path cost 0
+   Timers: message age 0, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   BPDU: sent 220, received 0
+
+ Port 43 (FastEthernet1/2) of VLAN10 is forwarding
+   Port path cost 19, Port priority 128, Port Identifier 128.43.
+   Designated root has priority 32768, address c401.07b4.0000
+   Designated bridge has priority 32768, address c401.07b4.0000
+   Designated port id is 128.43, designated path cost 0
+   Timers: message age 0, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   BPDU: sent 220, received 0
+
+
+ VLAN20 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, address c401.07b4.0001
+  Configured hello time 2, max age 20, forward delay 15
+  We are the root of the spanning tree
+  Topology change flag not set, detected flag not set
+  Number of topology changes 1 last change occurred 00:06:52 ago
+          from FastEthernet1/3
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 1, topology change 0, notification 0, aging 300
+
+ Port 44 (FastEthernet1/3) of VLAN20 is forwarding
+   Port path cost 19, Port priority 128, Port Identifier 128.44.
+   Designated root has priority 32768, address c401.07b4.0001
+   Designated bridge has priority 32768, address c401.07b4.0001
+   Designated port id is 128.44, designated path cost 0
+   Timers: message age 0, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   BPDU: sent 221, received 0
+
+ Port 45 (FastEthernet1/4) of VLAN20 is forwarding
+   Port path cost 19, Port priority 128, Port Identifier 128.45.
+   Designated root has priority 32768, address c401.07b4.0001
+   Designated bridge has priority 32768, address c401.07b4.0001
+   Designated port id is 128.45, designated path cost 0
+   Timers: message age 0, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   BPDU: sent 222, received 0
+
+
+SW2#show spanning-tree
+
+ VLAN1 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, address c402.1ab6.0000
+  Configured hello time 2, max age 20, forward delay 15
+  Current root has priority 32768, address c401.07b4.0002
+  Root port is 55 (FastEthernet1/14), cost of root path is 19
+  Topology change flag not set, detected flag not set
+  Number of topology changes 3 last change occurred 00:07:57 ago
+          from FastEthernet1/14
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 42 (FastEthernet1/1) of VLAN1 is forwarding
+   Port path cost 19, Port priority 128, Port Identifier 128.42.
+   Designated root has priority 32768, address c401.07b4.0002
+   Designated bridge has priority 32768, address c402.1ab6.0000
+   Designated port id is 128.42, designated path cost 19
+   Timers: message age 0, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   BPDU: sent 260, received 0
+
+ Port 43 (FastEthernet1/2) of VLAN1 is forwarding
+   Port path cost 19, Port priority 128, Port Identifier 128.43.
+   Designated root has priority 32768, address c401.07b4.0002
+   Designated bridge has priority 32768, address c402.1ab6.0000
+   Designated port id is 128.43, designated path cost 19
+   Timers: message age 0, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   BPDU: sent 261, received 0
+
+ Port 55 (FastEthernet1/14) of VLAN1 is forwarding
+   Port path cost 19, Port priority 128, Port Identifier 128.55.
+   Designated root has priority 32768, address c401.07b4.0002
+   Designated bridge has priority 32768, address c401.07b4.0002
+   Designated port id is 128.55, designated path cost 0
+   Timers: message age 1, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   BPDU: sent 3, received 267
+
+ Port 56 (FastEthernet1/15) of VLAN1 is blocking
+   Port path cost 19, Port priority 128, Port Identifier 128.56.
+   Designated root has priority 32768, address c401.07b4.0002
+   Designated bridge has priority 32768, address c401.07b4.0002
+   Designated port id is 128.56, designated path cost 0
+   Timers: message age 1, forward delay 0, hold 0
+   Number of transitions to forwarding state: 0
+   BPDU: sent 1, received 266
+
+
+PC5> ping 192.168.1.16
+
+84 bytes from 192.168.1.16 icmp_seq=1 ttl=64 time=0.310 ms
+84 bytes from 192.168.1.16 icmp_seq=2 ttl=64 time=0.331 ms
+84 bytes from 192.168.1.16 icmp_seq=3 ttl=64 time=0.327 ms
+84 bytes from 192.168.1.16 icmp_seq=4 ttl=64 time=0.258 ms
+84 bytes from 192.168.1.16 icmp_seq=5 ttl=64 time=0.376 ms
+
+
+PC1> ping 192.168.1.15
+
+host (192.168.1.15) not reachable

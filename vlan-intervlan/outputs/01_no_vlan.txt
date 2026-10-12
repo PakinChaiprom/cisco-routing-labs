@@ -1,0 +1,51 @@
+PC1> ping 192.168.1.12
+
+84 bytes from 192.168.1.12 icmp_seq=1 ttl=64 time=0.115 ms
+84 bytes from 192.168.1.12 icmp_seq=2 ttl=64 time=0.162 ms
+84 bytes from 192.168.1.12 icmp_seq=3 ttl=64 time=0.262 ms
+84 bytes from 192.168.1.12 icmp_seq=4 ttl=64 time=0.204 ms
+84 bytes from 192.168.1.12 icmp_seq=5 ttl=64 time=0.210 ms
+
+PC1> ping 192.168.1.13
+
+84 bytes from 192.168.1.13 icmp_seq=1 ttl=64 time=0.371 ms
+84 bytes from 192.168.1.13 icmp_seq=2 ttl=64 time=0.228 ms
+84 bytes from 192.168.1.13 icmp_seq=3 ttl=64 time=0.228 ms
+84 bytes from 192.168.1.13 icmp_seq=4 ttl=64 time=0.262 ms
+84 bytes from 192.168.1.13 icmp_seq=5 ttl=64 time=0.241 ms
+
+PC1> ping 192.168.1.14
+
+84 bytes from 192.168.1.14 icmp_seq=1 ttl=64 time=0.155 ms
+84 bytes from 192.168.1.14 icmp_seq=2 ttl=64 time=0.228 ms
+84 bytes from 192.168.1.14 icmp_seq=3 ttl=64 time=0.205 ms
+84 bytes from 192.168.1.14 icmp_seq=4 ttl=64 time=0.233 ms
+84 bytes from 192.168.1.14 icmp_seq=5 ttl=64 time=0.636 ms
+
+
+SW1#show vlan-sw br
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa1/0, Fa1/1, Fa1/2, Fa1/3
+                                                Fa1/4, Fa1/5, Fa1/6, Fa1/7
+                                                Fa1/8, Fa1/9, Fa1/10, Fa1/11
+                                                Fa1/12, Fa1/13, Fa1/14, Fa1/15
+1002 fddi-default                     active
+1003 token-ring-default               active
+1004 fddinet-default                  active
+1005 trnet-default                    active
+
+
+SW1#show mac-address-table
+Destination Address  Address Type  VLAN  Destination Port
+-------------------  ------------  ----  --------------------
+c401.07b4.0000          Self          1     Vlan1
+
+
+PC1> clear arp
+
+PC1> ping 192.168.1.12 -c 2
+
+84 bytes from 192.168.1.12 icmp_seq=1 ttl=64 time=0.109 ms
+84 bytes from 192.168.1.12 icmp_seq=2 ttl=64 time=0.202 ms

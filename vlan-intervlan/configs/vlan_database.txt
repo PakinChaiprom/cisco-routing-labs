@@ -1,0 +1,14 @@
+! VLANs on the NM-16ESW switch module are not part of the running-config.
+! They live in vlan.dat, and in GNS3 (Dynamips) they are lost every time the
+! project is closed. Paste this on SW1 and SW2 at the privileged EXEC prompt
+! after every start; the ports rejoin their VLANs by themselves.
+!
+! Part 1 (one switch) used only VLAN 10 and 20.
+! Part 2 added VLAN 99. Part 3 added VLAN 30.
+
+vlan database
+vlan 10 name SALES
+vlan 20 name ENG
+vlan 30 name MGMT
+vlan 99 name NATIVE
+exit

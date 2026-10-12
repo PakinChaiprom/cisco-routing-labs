@@ -1,0 +1,316 @@
+SW1(config)#int f1/14
+SW1(config-if)#swi
+SW1(config-if)#switchport tr native vlan 10
+SW1(config-if)#
+*Mar  1 01:36:17.087: %SPANTREE-2-RECV_PVID_ERR: Received BPDU with inconsistent peer vlan id 1 on FastEthernet1/14 VLAN10.
+*Mar  1 01:36:17.087: %SPANTREE-2-BLOCK_PVID_PEER: Blocking FastEthernet1/14 on VLAN1. Inconsistent peer vlan.
+*Mar  1 01:36:17.163: %SPANTREE-2-BLOCK_PVID_LOCAL: Blocking FastEthernet1/14 on VLAN10. Inconsistent local vlan.
+SW1(config-if)#
+SW1#
+*Mar  1 01:36:34.319: %SYS-5-CONFIG_I: Configured from console by console
+SW1#
+*Mar  1 01:37:29.939: %SPANTREE-2-BLOCK_PVID_PEER: Blocking FastEthernet1/14 on VLAN20. Inconsistent peer vlan.
+SW1#
+*Mar  1 01:37:42.927: %SPANTREE-2-UNBLOCK_CONSIST_PORT: Unblocking FastEthernet1/14 on VLAN1. Port consistency restored.
+SW1# PVST+:Inconsistency timer expired. inconsistency 0
+                 cleared for FastEthernet1/14
+
+
+
+SW2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+SW2(config)#int f1/14
+SW2(config-if)#sw
+SW2(config-if)#switchport tr native vlan 20
+SW2(config-if)#
+*Mar  1 01:37:08.843: %SPANTREE-2-RECV_PVID_ERR: Received BPDU with inconsistent peer vlan id 10 on FastEthernet1/14 VLAN20.
+*Mar  1 01:37:08.843: %SPANTREE-2-BLOCK_PVID_LOCAL: Blocking FastEthernet1/14 on VLAN20. Inconsistent local vlan.
+SW2(config-if)#end
+SW2#PVST+: restarted the forward delay timer for FastEthernet1/14
+
+SW2#
+*Mar  1 01:37:10.083: %SYS-5-CONFIG_I: Configured from console by console
+SW2#
+SW2#
+*Mar  1 01:37:22.819: %SPANTREE-2-UNBLOCK_CONSIST_PORT: Unblocking FastEthernet1/14 on VLAN1. Port consistency restored.
+SW2# PVST+:Inconsistency timer expired. inconsistency 0
+                 cleared for FastEthernet1/14
+
+
+SW1#show int tr
+
+Port      Mode         Encapsulation  Status        Native vlan
+Fa1/14    on           802.1q         trunking      10
+
+Port      Vlans allowed on trunk
+Fa1/14    1-1005
+
+Port      Vlans allowed and active in management domain
+Fa1/14    1,10,20
+
+Port      Vlans in spanning tree forwarding state and not pruned
+Fa1/14    1
+
+
+SW1#show spanning-tree
+
+ VLAN1 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, address c401.07b4.0002
+  Configured hello time 2, max age 20, forward delay 15
+  We are the root of the spanning tree
+  Topology change flag not set, detected flag not set
+  Number of topology changes 3 last change occurred 00:02:51 ago
+          from FastEthernet1/14
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 1, topology change 0, notification 0, aging 300
+
+ Port 55 (FastEthernet1/14) of VLAN1 is forwarding
+   Port path cost 19, Port priority 128, Port Identifier 128.55.
+   Designated root has priority 32768, address c401.07b4.0002
+   Designated bridge has priority 32768, address c401.07b4.0002
+   Designated port id is 128.55, designated path cost 0
+   Timers: message age 0, forward delay 0, hold 0
+   Number of transitions to forwarding state: 2
+   BPDU: sent 4261, received 79
+
+
+ VLAN10 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, address c401.07b4.0000
+  Configured hello time 2, max age 20, forward delay 15
+  We are the root of the spanning tree
+  Topology change flag not set, detected flag not set
+  Number of topology changes 7 last change occurred 00:03:34 ago
+          from FastEthernet1/14
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 1, topology change 0, notification 0, aging 300
+
+ Port 42 (FastEthernet1/1) of VLAN10 is forwarding
+   Port path cost 19, Port priority 128, Port Identifier 128.42.
+   Designated root has priority 32768, address c401.07b4.0000
+   Designated bridge has priority 32768, address c401.07b4.0000
+   Designated port id is 128.42, designated path cost 0
+   Timers: message age 0, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   BPDU: sent 3030, received 0
+
+ Port 43 (FastEthernet1/2) of VLAN10 is forwarding
+   Port path cost 19, Port priority 128, Port Identifier 128.43.
+   Designated root has priority 32768, address c401.07b4.0000
+   Designated bridge has priority 32768, address c401.07b4.0000
+   Designated port id is 128.43, designated path cost 0
+   Timers: message age 0, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   BPDU: sent 3030, received 0
+
+ Port 55 (FastEthernet1/14) of VLAN10 is broken (Port VLAN ID Mismatch)
+   Port path cost 19, Port priority 128, Port Identifier 128.55.
+   Designated root has priority 32768, address c401.07b4.0000
+   Designated bridge has priority 32768, address c401.07b4.0000
+   Designated port id is 128.55, designated path cost 0
+   Timers: message age 1, forward delay 14, hold 0
+   Number of transitions to forwarding state: 1
+   BPDU: sent 2256, received 149
+
+
+ VLAN20 is executing the ieee compatible Spanning Tree protocol
+  Bridge Identifier has priority 32768, address c401.07b4.0001
+  Configured hello time 2, max age 20, forward delay 15
+  We are the root of the spanning tree
+  Topology change flag not set, detected flag not set
+  Number of topology changes 7 last change occurred 00:03:37 ago
+          from FastEthernet1/14
+  Times:  hold 1, topology change 35, notification 2
+          hello 2, max age 20, forward delay 15
+  Timers: hello 0, topology change 0, notification 0, aging 300
+
+ Port 44 (FastEthernet1/3) of VLAN20 is forwarding
+   Port path cost 19, Port priority 128, Port Identifier 128.44.
+   Designated root has priority 32768, address c401.07b4.0001
+   Designated bridge has priority 32768, address c401.07b4.0001
+   Designated port id is 128.44, designated path cost 0
+   Timers: message age 0, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   BPDU: sent 3031, received 0
+
+ Port 45 (FastEthernet1/4) of VLAN20 is forwarding
+   Port path cost 19, Port priority 128, Port Identifier 128.45.
+   Designated root has priority 32768, address c401.07b4.0001
+   Designated bridge has priority 32768, address c401.07b4.0001
+   Designated port id is 128.45, designated path cost 0
+   Timers: message age 0, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   BPDU: sent 3031, received 0
+
+ Port 55 (FastEthernet1/14) of VLAN20 is broken (Port VLAN ID Mismatch)
+   Port path cost 19, Port priority 128, Port Identifier 128.55.
+   Designated root has priority 32768, address c401.07b4.0001
+   Designated bridge has priority 32768, address c401.07b4.0001
+   Designated port id is 128.55, designated path cost 0
+   Timers: message age 1, forward delay 14, hold 0
+   Number of transitions to forwarding state: 1
+   BPDU: sent 245, received 1
+
+ Port 56 (FastEthernet1/15) of VLAN20 is forwarding
+   Port path cost 19, Port priority 128, Port Identifier 128.56.
+   Designated root has priority 32768, address c401.07b4.0001
+   Designated bridge has priority 32768, address c401.07b4.0001
+   Designated port id is 128.56, designated path cost 0
+   Timers: message age 0, forward delay 0, hold 0
+   Number of transitions to forwarding state: 1
+   BPDU: sent 2318, received 0
+
+
+PC1> clear arp
+
+PC1> ping 192.168.1.16
+
+host (192.168.1.16) not reachable
+
+PC1> ping 192.168.1.15
+
+host (192.168.1.15) not reachable
+
+
+SW2#vlan database
+SW2(vlan)#vlan 99 name NATIVE
+VLAN 99 added:
+    Name: NATIVE
+SW2(vlan)#exit
+APPLY completed.
+Exiting....
+SW2#show vlan-sw
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa1/0, Fa1/3, Fa1/4, Fa1/5
+                                                Fa1/6, Fa1/7, Fa1/8, Fa1/9
+                                                Fa1/10, Fa1/11, Fa1/12, Fa1/13
+10   SALES                            active    Fa1/1
+20   ENG                              active    Fa1/2, Fa1/15
+99   NATIVE                           active
+1002 fddi-default                     active
+1003 token-ring-default               active
+1004 fddinet-default                  active
+1005 trnet-default                    active
+
+VLAN Type  SAID       MTU   Parent RingNo BridgeNo Stp  BrdgMode Trans1 Trans2
+---- ----- ---------- ----- ------ ------ -------- ---- -------- ------ ------
+1    enet  100001     1500  -      -      -        -    -        1002   1003
+10   enet  100010     1500  -      -      -        -    -        0      0
+20   enet  100020     1500  -      -      -        -    -        0      0
+99   enet  100099     1500  -      -      -        -    -        0      0
+1002 fddi  101002     1500  -      -      -        -    -        1      1003
+1003 tr    101003     1500  1005   0      -        -    srb      1      1002
+1004 fdnet 101004     1500  -      -      1        ibm  -        0      0
+1005 trnet 101005     1500  -      -      1        ibm  -        0      0
+SW2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+SW2(config)#int f1/14
+SW2(config-if)#sw tr native vlan 99
+SW2(config-if)#
+*Mar  1 01:53:51.175: %SPANTREE-2-RECV_PVID_ERR: Received BPDU with inconsistent peer vlan id 10 on FastEthernet1/14 VLAN99.
+*Mar  1 01:53:51.175: %SPANTREE-2-BLOCK_PVID_LOCAL: Blocking FastEthernet1/14 on VLAN99. Inconsistent local vlan.
+SW2(config-if)#PVST+: restarted the forward delay timer for FastEthernet1/14
+
+SW2(config-if)#end
+SW2#
+*Mar  1 01:53:56.003: %SYS-5-CONFIG_I: Configured from console by console
+SW2#
+*Mar  1 01:54:05.167: %SPANTREE-2-UNBLOCK_CONSIST_PORT: Unblocking FastEthernet1/14 on VLAN20. Port consistency restored.
+SW2# PVST+:Inconsistency timer expired. inconsistency 0
+                 cleared for FastEthernet1/14
+
+SW2#PVST+: restarted the forward delay timer for FastEthernet1/14
+ PVST+:Inconsistency timer expired. inconsistency 2
+                 cleared for FastEthernet1/14
+
+SW2# PVST+:Inconsistency timer expired. inconsistency 2
+                 cleared for FastEthernet1/14
+
+
+SW1(vlan)# vlan 99 name NATIVE
+VLAN 99 added:
+    Name: NATIVE
+SW1(vlan)#end
+           ^
+% Invalid input detected at '^' marker.
+
+SW1(vlan)#exir
+             ^
+% Invalid input detected at '^' marker.
+
+SW1(vlan)#exit
+APPLY completed.
+Exiting....
+SW1#show vlan-sw
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa1/0, Fa1/5, Fa1/6, Fa1/7
+                                                Fa1/8, Fa1/9, Fa1/10, Fa1/11
+                                                Fa1/12, Fa1/13
+10   SALES                            active    Fa1/1, Fa1/2
+20   ENG                              active    Fa1/3, Fa1/4, Fa1/15
+99   NATIVE                           active
+1002 fddi-default                     active
+1003 token-ring-default               active
+1004 fddinet-default                  active
+1005 trnet-default                    active
+
+VLAN Type  SAID       MTU   Parent RingNo BridgeNo Stp  BrdgMode Trans1 Trans2
+---- ----- ---------- ----- ------ ------ -------- ---- -------- ------ ------
+1    enet  100001     1500  -      -      -        -    -        1002   1003
+10   enet  100010     1500  -      -      -        -    -        0      0
+20   enet  100020     1500  -      -      -        -    -        0      0
+99   enet  100099     1500  -      -      -        -    -        0      0
+1002 fddi  101002     1500  -      -      -        -    -        1      1003
+1003 tr    101003     1500  1005   0      -        -    srb      1      1002
+1004 fdnet 101004     1500  -      -      1        ibm  -        0      0
+1005 trnet 101005     1500  -      -      1        ibm  -        0      0
+SW1#
+*Mar  1 01:54:12.259: %SPANTREE-2-BLOCK_PVID_PEER: Blocking FastEthernet1/14 on VLAN99. Inconsistent peer vlan.
+SW1#
+*Mar  1 01:54:25.095: %SPANTREE-2-UNBLOCK_CONSIST_PORT: Unblocking FastEthernet1/14 on VLAN20. Port consistency restored.
+SW1# PVST+:Inconsistency timer expired. inconsistency 0
+                 cleared for FastEthernet1/14
+
+SW1#int f1/14
+     ^
+% Invalid input detected at '^' marker.
+
+SW1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+SW1(config)#int f1/14
+SW1(config-if)#sw tr native vlan 99
+SW1(config-if)#end
+SW1#
+*Mar  1 01:54:56.955: %SYS-5-CONFIG_I: Configured from console by console
+SW1# PVST+:Inconsistency timer expired. inconsistency 2
+                 cleared for FastEthernet1/14
+ PVST+:Inconsistency timer expired. inconsistency 2
+                 cleared for FastEthernet1/14
+
+
+
+PC1> ping 192.168.1.15
+
+84 bytes from 192.168.1.15 icmp_seq=1 ttl=64 time=0.412 ms
+84 bytes from 192.168.1.15 icmp_seq=2 ttl=64 time=0.313 ms
+84 bytes from 192.168.1.15 icmp_seq=3 ttl=64 time=0.845 ms
+84 bytes from 192.168.1.15 icmp_seq=4 ttl=64 time=0.313 ms
+84 bytes from 192.168.1.15 icmp_seq=5 ttl=64 time=0.360 ms
+
+PC1> ping 192.168.1.16
+
+host (192.168.1.16) not reachable
+
+
+PC3> ping 192.168.1.16
+
+84 bytes from 192.168.1.16 icmp_seq=1 ttl=64 time=0.150 ms
+84 bytes from 192.168.1.16 icmp_seq=2 ttl=64 time=0.232 ms
+84 bytes from 192.168.1.16 icmp_seq=3 ttl=64 time=0.213 ms
+84 bytes from 192.168.1.16 icmp_seq=4 ttl=64 time=0.427 ms
+84 bytes from 192.168.1.16 icmp_seq=5 ttl=64 time=0.395 ms

@@ -1,0 +1,150 @@
+SW1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+SW1(config)#int f1/14
+SW1(config-if)#no sw
+SW1(config-if)#no switchport acc
+SW1(config-if)#no switchport access vlan 10
+SW1(config-if)#sw
+SW1(config-if)#switchport trunk enc
+SW1(config-if)#switchport trunk encapsulation dot1q
+SW1(config-if)#sw
+SW1(config-if)#switchport mode trunk
+SW1(config-if)#end
+*Mar  1 00:30:23.155: %DTP-5-TRUNKPORTON: Port Fa1/14 has become dot1q trunk
+SW1(config-if)#end
+SW1#
+
+SW2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+SW2(config)#int f1/14
+SW2(config-if)#no sw acc vlan 10
+SW2(config-if)#sw trunk en dot1q
+SW2(config-if)#sw mode trunk
+SW2(config-if)#end
+SW2#
+
+
+PC1> ping 192.168.1.15
+
+84 bytes from 192.168.1.15 icmp_seq=1 ttl=64 time=0.231 ms
+84 bytes from 192.168.1.15 icmp_seq=2 ttl=64 time=0.345 ms
+84 bytes from 192.168.1.15 icmp_seq=3 ttl=64 time=0.283 ms
+84 bytes from 192.168.1.15 icmp_seq=4 ttl=64 time=0.434 ms
+84 bytes from 192.168.1.15 icmp_seq=5 ttl=64 time=0.285 ms
+
+PC1>
+PC1> ping 192.168.1.16
+
+host (192.168.1.16) not reachable
+
+
+PC3> ping 192.168.1.16
+
+84 bytes from 192.168.1.16 icmp_seq=1 ttl=64 time=0.276 ms
+84 bytes from 192.168.1.16 icmp_seq=2 ttl=64 time=0.403 ms
+84 bytes from 192.168.1.16 icmp_seq=3 ttl=64 time=0.378 ms
+84 bytes from 192.168.1.16 icmp_seq=4 ttl=64 time=0.426 ms
+84 bytes from 192.168.1.16 icmp_seq=5 ttl=64 time=0.382 ms
+
+
+
+SW1#show int trunk
+
+Port      Mode         Encapsulation  Status        Native vlan
+Fa1/14    on           802.1q         trunking      1
+
+Port      Vlans allowed on trunk
+Fa1/14    1-1005
+
+Port      Vlans allowed and active in management domain
+Fa1/14    1,10,20
+
+Port      Vlans in spanning tree forwarding state and not pruned
+Fa1/14    1,10,20
+
+
+
+SW1#show int f1/14 switchport
+Name: Fa1/14
+Switchport: Enabled
+Administrative Mode: trunk
+Operational Mode: trunk
+Administrative Trunking Encapsulation: dot1q
+Operational Trunking Encapsulation: dot1q
+Negotiation of Trunking: Disabled
+Access Mode VLAN: 0 ((Inactive))
+Trunking Native Mode VLAN: 1 (default)
+Trunking VLANs Enabled: ALL
+Trunking VLANs Active: 1,10,20
+Priority for untagged frames: 0
+Override vlan tag priority: FALSE
+Voice VLAN: none
+Appliance trust: none
+
+
+--- Wireshark (pcaps/05_trunk.pcapng, 297 frames, 138 s) ---
+Frames in VLAN 10: 81 (66 STP + 5 ARP + 10 ICMP)
+Frames in VLAN 20: 78 (66 STP + 2 ARP + 10 ICMP)
+802.1Q header: PRI = 0 (Best Effort), DEI = 0 (Ineligible), ID = 10, Type = IPv4 (0x0800)
+Ethernet Type before the tag: 802.1Q Virtual LAN (0x8100)
+Frame length of the same echo request: trunk = 102 bytes, access link of PC1 = 98 bytes
+Protocol Hierarchy: tagged 159 frames (132 STP, 20 ICMP, 7 ARP), untagged 136 frames (132 STP, 4 CDP), other 2
+STP on the trunk:
+  untagged: 132 frames = 66 IEEE BPDUs to 01:80:c2:00:00:00 + 66 PVST+ BPDUs to 01:00:0c:cc:cc:cd, Bridge ID c4:01:07:b4:00:02 (VLAN 1)
+  tag 10  :  66 frames, Dst = 01:00:0c:cc:cc:cd, Bridge ID = c4:01:07:b4:00:00
+  tag 20  :  66 frames, Dst = 01:00:0c:cc:cc:cd, Bridge ID = c4:01:07:b4:00:01
+CDP: untagged
+DTP: none
+
+SW1(config)#int f1/14
+SW1(config-if)#switchport trunk allowed vlan 1,10,1002-1005
+SW1(config-if)#end
+SW1#
+
+
+PC1> ping 192.168.1.15
+
+84 bytes from 192.168.1.15 icmp_seq=1 ttl=64 time=0.198 ms
+84 bytes from 192.168.1.15 icmp_seq=2 ttl=64 time=0.228 ms
+84 bytes from 192.168.1.15 icmp_seq=3 ttl=64 time=0.222 ms
+84 bytes from 192.168.1.15 icmp_seq=4 ttl=64 time=0.234 ms
+84 bytes from 192.168.1.15 icmp_seq=5 ttl=64 time=0.319 ms
+
+PC1> ping 192.168.1.16
+
+host (192.168.1.16) not reachable
+
+
+PC3> ping 192.168.1.16
+
+host (192.168.1.16) not reachable
+
+
+SW1#show int trunk
+
+Port      Mode         Encapsulation  Status        Native vlan
+Fa1/14    on           802.1q         trunking      1
+
+Port      Vlans allowed on trunk
+Fa1/14    1,10,1002-1005
+
+Port      Vlans allowed and active in management domain
+Fa1/14    1,10
+
+Port      Vlans in spanning tree forwarding state and not pruned
+Fa1/14    1,10
+SW1#
+
+
+SW1(config)#swit
+SW1(config)#int f1/14
+SW1(config-if)#sw tr allowed vlan 1-1005
+
+
+PC3> ping 192.168.1.16
+
+84 bytes from 192.168.1.16 icmp_seq=1 ttl=64 time=0.368 ms
+84 bytes from 192.168.1.16 icmp_seq=2 ttl=64 time=0.237 ms
+84 bytes from 192.168.1.16 icmp_seq=3 ttl=64 time=0.245 ms
+84 bytes from 192.168.1.16 icmp_seq=4 ttl=64 time=0.468 ms
+84 bytes from 192.168.1.16 icmp_seq=5 ttl=64 time=0.255 ms

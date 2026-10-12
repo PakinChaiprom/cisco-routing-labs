@@ -1,0 +1,78 @@
+SW1#vlan database
+SW1(vlan)#vlan 10 name SALES
+VLAN 10 added:
+    Name: SALES
+SW1(vlan)#vlan 20 name ENG
+VLAN 20 added:
+    Name: ENG
+SW1(vlan)#exit
+APPLY completed.
+Exiting....
+SW1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+SW1(config)#int range f1/1 - 2
+SW1(config-if-range)#switchport mode access
+SW1(config-if-range)#switch
+SW1(config-if-range)#switchport access vlan 10
+SW1(config-if-range)#exit
+SW1(config)#int range f1/3 - 4
+SW1(config-if-range)#switchp
+SW1(config-if-range)#switchport mode access
+SW1(config-if-range)#switchp
+SW1(config-if-range)#switchport access vlan 20
+SW1(config-if-range)#end
+SW1#
+*Mar  1 00:30:27.347: %LINEPROTO-5-UPDOWN: Line protocol on Interface Vlan1, changed state to down
+*Mar  1 00:30:28.243: %SYS-5-CONFIG_I: Configured from console by console
+SW1#
+
+
+PC1> ping 192.168.1.12
+
+84 bytes from 192.168.1.12 icmp_seq=1 ttl=64 time=0.074 ms
+84 bytes from 192.168.1.12 icmp_seq=2 ttl=64 time=0.148 ms
+84 bytes from 192.168.1.12 icmp_seq=3 ttl=64 time=0.231 ms
+84 bytes from 192.168.1.12 icmp_seq=4 ttl=64 time=0.154 ms
+84 bytes from 192.168.1.12 icmp_seq=5 ttl=64 time=0.174 ms
+
+PC1> ping 192.168.1.13
+
+host (192.168.1.13) not reachable
+
+
+PC3> ping 192.168.1.14
+
+84 bytes from 192.168.1.14 icmp_seq=1 ttl=64 time=0.279 ms
+84 bytes from 192.168.1.14 icmp_seq=2 ttl=64 time=0.324 ms
+84 bytes from 192.168.1.14 icmp_seq=3 ttl=64 time=0.235 ms
+84 bytes from 192.168.1.14 icmp_seq=4 ttl=64 time=0.270 ms
+84 bytes from 192.168.1.14 icmp_seq=5 ttl=64 time=0.360 ms
+
+
+SW1#show vlan-switch br
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa1/0, Fa1/5, Fa1/6, Fa1/7
+                                                Fa1/8, Fa1/9, Fa1/10, Fa1/11
+                                                Fa1/12, Fa1/13, Fa1/14, Fa1/15
+10   SALES                            active    Fa1/1, Fa1/2
+20   ENG                              active    Fa1/3, Fa1/4
+1002 fddi-default                     active
+1003 token-ring-default               active
+1004 fddinet-default                  active
+1005 trnet-default                    active
+
+
+SW1#show mac-address-table
+Destination Address  Address Type  VLAN  Destination Port
+-------------------  ------------  ----  --------------------
+c401.07b4.0000          Self          1     Vlan1
+
+
+PC1> clear arp
+
+PC1> ping 192.168.1.12 -c 2
+
+84 bytes from 192.168.1.12 icmp_seq=1 ttl=64 time=0.138 ms
+84 bytes from 192.168.1.12 icmp_seq=2 ttl=64 time=0.365 ms

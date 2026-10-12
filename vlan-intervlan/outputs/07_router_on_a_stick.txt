@@ -1,0 +1,237 @@
+PC1> ping 192.168.10.1
+
+84 bytes from 192.168.10.1 icmp_seq=1 ttl=255 time=10.568 ms
+84 bytes from 192.168.10.1 icmp_seq=2 ttl=255 time=2.253 ms
+84 bytes from 192.168.10.1 icmp_seq=3 ttl=255 time=1.076 ms
+84 bytes from 192.168.10.1 icmp_seq=4 ttl=255 time=3.373 ms
+84 bytes from 192.168.10.1 icmp_seq=5 ttl=255 time=11.242 ms
+
+PC1> ping 192.168.10.12
+
+84 bytes from 192.168.10.12 icmp_seq=1 ttl=64 time=0.156 ms
+84 bytes from 192.168.10.12 icmp_seq=2 ttl=64 time=0.317 ms
+84 bytes from 192.168.10.12 icmp_seq=3 ttl=64 time=0.244 ms
+84 bytes from 192.168.10.12 icmp_seq=4 ttl=64 time=0.190 ms
+84 bytes from 192.168.10.12 icmp_seq=5 ttl=64 time=0.239 ms
+
+PC1> ping 192.168.20.13
+
+84 bytes from 192.168.20.13 icmp_seq=1 ttl=63 time=28.483 ms
+84 bytes from 192.168.20.13 icmp_seq=2 ttl=63 time=10.931 ms
+84 bytes from 192.168.20.13 icmp_seq=3 ttl=63 time=13.693 ms
+84 bytes from 192.168.20.13 icmp_seq=4 ttl=63 time=11.079 ms
+84 bytes from 192.168.20.13 icmp_seq=5 ttl=63 time=19.322 ms
+
+PC1> ping 192.168.20.16
+
+84 bytes from 192.168.20.16 icmp_seq=1 ttl=63 time=28.709 ms
+84 bytes from 192.168.20.16 icmp_seq=2 ttl=63 time=13.263 ms
+84 bytes from 192.168.20.16 icmp_seq=3 ttl=63 time=12.423 ms
+84 bytes from 192.168.20.16 icmp_seq=4 ttl=63 time=18.535 ms
+84 bytes from 192.168.20.16 icmp_seq=5 ttl=63 time=13.596 ms
+
+PC1> ping 192.168.20.17
+
+192.168.20.17 icmp_seq=1 timeout
+192.168.20.17 icmp_seq=2 timeout
+192.168.20.17 icmp_seq=3 timeout
+^C
+PC1> ping 192.168.30.17
+
+84 bytes from 192.168.30.17 icmp_seq=1 ttl=63 time=30.799 ms
+84 bytes from 192.168.30.17 icmp_seq=2 ttl=63 time=16.537 ms
+84 bytes from 192.168.30.17 icmp_seq=3 ttl=63 time=20.180 ms
+84 bytes from 192.168.30.17 icmp_seq=4 ttl=63 time=13.670 ms
+84 bytes from 192.168.30.17 icmp_seq=5 ttl=63 time=14.632 ms
+
+PC1> trace 192.168.10.12
+trace to 192.168.10.12, 8 hops max, press Ctrl+C to stop
+ 1   *192.168.10.12   0.340 ms (ICMP type:3, code:3, Destination port unreachable)
+
+PC1> trace 192.168.20.16
+trace to 192.168.20.16, 8 hops max, press Ctrl+C to stop
+ 1   192.168.10.1   9.035 ms  9.000 ms  10.145 ms
+ 2   *192.168.20.16   18.890 ms (ICMP type:3, code:3, Destination port unreachable)
+
+
+--- Wireshark (pcaps/07_router_on_a_stick_r1_link.pcapng), echo request PC1 -> PC3 ---
+Frame, VLAN ID, Source MAC, Destination MAC, TTL
+309, 10, 00:50:79:66:68:00, ca:03:0a:0e:00:00, 64
+312, 20, ca:03:0a:0e:00:00, 00:50:79:66:68:02, 63
+
+One ping (request + reply) between VLANs = 4 frames on the R1 link.
+A ping inside VLAN 10 (PC1 -> PC2) does not cross this link.
+
+
+R1#show ip int br
+Interface              IP-Address      OK? Method Status                Protocol
+FastEthernet0/0        unassigned      YES unset  up                    up
+FastEthernet0/0.10     192.168.10.1    YES manual up                    up
+FastEthernet0/0.20     192.168.20.1    YES manual up                    up
+FastEthernet0/0.30     192.168.30.1    YES manual up                    up
+FastEthernet0/0.99     unassigned      YES unset  up                    up
+FastEthernet1/0        unassigned      YES unset  administratively down down
+Ethernet2/0            unassigned      YES unset  administratively down down
+Ethernet2/1            unassigned      YES unset  administratively down down
+Ethernet2/2            unassigned      YES unset  administratively down down
+Ethernet2/3            unassigned      YES unset  administratively down down
+R1#
+
+
+R1#show ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       + - replicated route, % - next hop override
+
+Gateway of last resort is not set
+
+      192.168.10.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.168.10.0/24 is directly connected, FastEthernet0/0.10
+L        192.168.10.1/32 is directly connected, FastEthernet0/0.10
+      192.168.20.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.168.20.0/24 is directly connected, FastEthernet0/0.20
+L        192.168.20.1/32 is directly connected, FastEthernet0/0.20
+      192.168.30.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.168.30.0/24 is directly connected, FastEthernet0/0.30
+L        192.168.30.1/32 is directly connected, FastEthernet0/0.30
+R1#
+
+R1#show vlans
+
+VLAN ID: 1 (IEEE 802.1Q Encapsulation)
+
+   Protocols Configured:          Received:        Transmitted:
+
+VLAN trunk interfaces for VLAN ID 1:
+FastEthernet0/0
+
+FastEthernet0/0 (1)
+
+
+      Total 921 packets, 62328 bytes input
+      Total 184 packets, 14414 bytes output
+
+VLAN ID: 10 (IEEE 802.1Q Encapsulation)
+
+   Protocols Configured:          Received:        Transmitted:
+                     IP                 31                  26
+
+VLAN trunk interfaces for VLAN ID 10:
+FastEthernet0/0.10
+
+FastEthernet0/0.10 (10)
+
+                     IP: 192.168.10.1
+
+      Total 796 packets, 55162 bytes input
+      Total 28 packets, 2624 bytes output
+
+VLAN ID: 20 (IEEE 802.1Q Encapsulation)
+
+   Protocols Configured:          Received:        Transmitted:
+                     IP                 15                  13
+
+VLAN trunk interfaces for VLAN ID 20:
+FastEthernet0/0.20
+
+FastEthernet0/0.20 (20)
+
+                     IP: 192.168.20.1
+
+      Total 752 packets, 51534 bytes input
+      Total 36 packets, 2408 bytes output
+
+VLAN ID: 30 (IEEE 802.1Q Encapsulation)
+
+   Protocols Configured:          Received:        Transmitted:
+                     IP                  6                   5
+
+VLAN trunk interfaces for VLAN ID 30:
+FastEthernet0/0.30
+
+FastEthernet0/0.30 (30)
+
+                     IP: 192.168.30.1
+
+      Total 719 packets, 49058 bytes input
+      Total 7 packets, 602 bytes output
+
+VLAN ID: 99 (IEEE 802.1Q Encapsulation)
+
+ This is configured as native Vlan for the following interface(s) :
+FastEthernet0/0
+
+   Protocols Configured:          Received:        Transmitted:
+
+VLAN trunk interfaces for VLAN ID 99:
+FastEthernet0/0.99
+
+FastEthernet0/0.99 (99)
+
+
+      Total 1407 packets, 93734 bytes input
+      Total 0 packets, 0 bytes output
+
+
+R1#show arp
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  192.168.10.1            -   ca03.0a0e.0000  ARPA   FastEthernet0/0.10
+Internet  192.168.10.11          22   0050.7966.6800  ARPA   FastEthernet0/0.10
+Internet  192.168.20.1            -   ca03.0a0e.0000  ARPA   FastEthernet0/0.20
+Internet  192.168.20.13          21   0050.7966.6802  ARPA   FastEthernet0/0.20
+Internet  192.168.20.16          21   0050.7966.6805  ARPA   FastEthernet0/0.20
+Internet  192.168.30.1            -   ca03.0a0e.0000  ARPA   FastEthernet0/0.30
+Internet  192.168.30.17          21   0050.7966.6806  ARPA   FastEthernet0/0.30
+R1#
+
+
+SW1#show int tr
+
+Port      Mode         Encapsulation  Status        Native vlan
+Fa1/0     on           802.1q         trunking      99
+Fa1/14    on           802.1q         trunking      99
+
+Port      Vlans allowed on trunk
+Fa1/0     1-1005
+Fa1/14    1-1005
+
+Port      Vlans allowed and active in management domain
+Fa1/0     1,10,20,30,99
+Fa1/14    1,10,20,30,99
+
+Port      Vlans in spanning tree forwarding state and not pruned
+Fa1/0     1,10,20,30,99
+Fa1/14    1,10,20,30,99
+
+
+SW1#show mac-add
+Destination Address  Address Type  VLAN  Destination Port
+-------------------  ------------  ----  --------------------
+c401.07b4.0000          Self          1     Vlan1
+ca03.0a0e.0000          Dynamic       1     FastEthernet1/0
+
+
+SW2#show int tr
+
+Port      Mode         Encapsulation  Status        Native vlan
+Fa1/14    on           802.1q         trunking      99
+
+Port      Vlans allowed on trunk
+Fa1/14    1-1005
+
+Port      Vlans allowed and active in management domain
+Fa1/14    1,10,20,30,99
+
+Port      Vlans in spanning tree forwarding state and not pruned
+Fa1/14    1,10,20,30,99
+
+
+SW2#show mac-add
+Destination Address  Address Type  VLAN  Destination Port
+-------------------  ------------  ----  --------------------
+c402.1ab6.0000          Self          1     Vlan1
